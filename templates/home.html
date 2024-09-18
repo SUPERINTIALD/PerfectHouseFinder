@@ -1,13 +1,76 @@
-{% extends "base.html" %}
-
-{% block main %}
-<h2>Welcome, {{ username }}</h2>
-<div class="welcome-prompt">
-    <p>What are you looking for in a house?</p>
-    <form action="/search" method="get">
-        <input type="text" name="query" placeholder="e.g., 3 bedroom, near park, etc." required>
-        <button type="submit">Search</button>
-    </form>
-</div>
-
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Home Finder</title>
+    <link href="../static/vendors/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/vendors/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- <link href="../static/vendors/node_modules/aos/dist/aos.css" rel="stylesheet"> -->
+    <link href="../static/vendors/node_modules/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
+    <!-- <link href="../static/vendors/node_modules/swiper/swiper-bundle.min.css" rel="stylesheet"> -->
+    <link href="../static/css/main.css" rel="stylesheet">
+</head>
+<body>
+    <header id="header" class="header d-flex flex-column justify-content-center">
+        <i class="header-toggle d-xl-none bi bi-list"></i>
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero-section" data-aos="fade-up"></section>
+            <div class="container">
+                <h1>Welcome to Perfect Home Finder</h1>
+                <p>Your journey to find the perfect home starts here.</p>
+                <a href="/home" class="btn btn-primary">Find a Home</a>
+            </div>
+        </section>
+        <!-- <section class="search-section" data-aos="fade-up">
+            <div class="container">
+                <h2>Search for Homes</h2>
+                <input type="text" id="search-bar" class="form-control" placeholder="Search for homes...">
+                <button id="search-button" class="btn btn-primary mt-2">Search</button>
+                <div id="search-results" class="mt-4"></div>
+            </div>
+        </section> -->
+        <section class="hero-section" data-aos="fade-up">
+            <div class="container">
+                <h2>Search for Your Dream Home</h2>
+                <form action="/search" method="GET" class="search-form">
+                    <div class="form-group">
+                        <label for="search">What are you looking for in a house?</label>
+                        <input type="text" id="search" name="search" class="form-control" placeholder="e.g., 3 bedrooms, good schools, low crime rate">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+                <a href="/home" class="btn btn-primary mt-3">Find a Home</a>
+            </div>
+        </section>
+        <section class="features-section" data-aos="fade-up">
+            <div class="container">
+                <h2>Why Choose Us?</h2>
+                <ul>
+                    <li>Wide range of properties</li>
+                    <li>Expert advice</li>
+                    <li>Trusted by thousands</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Perfect Home Finder. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="../static/vendors/node_modules/aos/dist/aos.js" defer></script>
+    <script src="../static/vendors/node_modules/glightbox/dist/js/glightbox.min.js" defer></script>
+    <!-- <script src="../static/vendors/node_modules/swiper/swiper-bundle.min.js" defer></script> -->
+    <script src="../static/js/main.js"></script>
+    <script>src="../static/js/search.js"</script>
+</body>
+</html>
