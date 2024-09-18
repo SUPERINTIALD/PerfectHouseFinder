@@ -136,10 +136,28 @@ def handle_math_question(question):
         expr = sp.sympify(expression)
         sp.plot(expr, (x, -10, 10))
         plt.savefig('plot.png')
+        plt.pause(5)
         plt.close()
         with open('plot.png', 'rb') as image_file:
             encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
         return f'<img src="data:image/png;base64,{encoded_string}" />'
+    # TOO MUCH RUNTIME
+    # match = re.match(r'plot\s*(.+)', question.lower())
+    # if match:
+    #     expression = match.groups()[0]
+    #     x = sp.symbols('x')
+    #     expr = sp.sympify(expression)
+    #     plot = sp.plot(expr, (x, -10, 10), show=False)
+        
+    #     # Save the plot to a BytesIO object
+    #     buf = io.BytesIO()
+    #     plot._backend.fig.savefig(buf, format='png')
+    #     plt.close(plot._backend.fig)
+        
+    #     # Encode the plot as a base64 string
+    #     buf.seek(0)
+    #     encoded_string = base64.b64encode(buf.read()).decode('utf-8')
+    #     return f'<img src="data:image/png;base64,{encoded_string}" />'
     
     return None
 
