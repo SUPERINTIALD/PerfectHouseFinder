@@ -4,6 +4,11 @@ from transformers import pipeline, AutoTokenizer, AutoModelForQuestionAnswering
 from datasets import load_dataset
 import re
 import random
+import sympy as sp
+import matplotlib.pyplot as plt
+import base64
+import io
+
 
 
 app = Flask(__name__)
@@ -31,7 +36,23 @@ tokenizer.clean_up_tokenization_spaces = True
 
 # Load the NLP pipeline with the configured tokenizer and model
 nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
+# def handle_math_question(question):
+#     match = re.match(r'(\d+)\s*([+\-*/])\s*(\d+)', question.lower())
+#     if match:
+#         num1, operator, num2 = match.groups()
+#         num1, num2 = int(num1), int(num2)
+#         if operator == '+':
+#             return num1 + num2
+#         elif operator == '-':
+#             return num1 - num2
+#         elif operator == '*':
+#             return num1 * num2
+#         elif operator == '/':
+#             return num1 / num2
+            
+#     return None
 def handle_math_question(question):
+    # Match basic arithmetic operations
     match = re.match(r'(\d+)\s*([+\-*/])\s*(\d+)', question.lower())
     if match:
         num1, operator, num2 = match.groups()
@@ -44,6 +65,82 @@ def handle_math_question(question):
             return num1 * num2
         elif operator == '/':
             return num1 / num2
+    
+    # Match exponentiation
+    match = re.match(r'(\d+)\s*\^\s*(\d+)', question.lower())
+    if match:
+        base, exponent = match.groups()
+        return int(base) ** int(exponent)
+    
+    # Match logarithms
+    match = re.match(r'log\s*\((\d+)\)', question.lower())
+    if match:
+        value = match.groups()[0]
+        return sp.log(int(value))
+    
+    # Match differentiation
+    match = re.match(r'differentiate\s*(.+)', question.lower())
+    if match:
+        expression = match.groups()[0]
+        x = sp.symbols('x')
+        expr = sp.sympify(expression)
+        return sp.diff(expr, x)
+    
+    # Match integration
+    match = re.match(r'integrate\s*(.+)', question.lower())
+    if match:
+        expression = match.groups()[0]
+        x = sp.symbols('x')
+        expr = sp.sympify(expression)
+        return sp.integrate(expr, x)
+    
+    # Match matrix operations
+    match = re.match(r'matrix\s*(.+)', question.lower())
+    if match:
+        expression = match.groups()[0]
+        matrix = sp.Matrix(sp.sympify(expression))
+        return matrix
+    
+    # Match solving linear equations
+    match = re.match(r'solve\s*linear\s*equations\s*(.+)', question.lower())
+    if match:
+        equations = match.groups()[0]
+        eqs = [sp.sympify(eq) for eq in equations.split(',')]
+        symbols = list(eqs[0].free_symbols)
+        solution = sp.linsolve(eqs, *symbols)
+        return solution
+    
+    # Match solving differential equations
+    match = re.match(r'solve\s*differential\s*equation\s*(.+)', question.lower())
+    if match:
+        equation = match.groups()[0]
+        x = sp.symbols('x')
+        f = sp.Function('f')
+        eq = sp.sympify(equation)
+        solution = sp.dsolve(eq, f(x))
+        return solution
+    
+    # Match statistical operations
+    match = re.match(r'statistics\s*(.+)', question.lower())
+    if match:
+        data = [int(num) for num in match.groups()[0].split(',')]
+        mean = sp.stats.mean(data)
+        variance = sp.stats.variance(data)
+        return f"Mean: {mean}, Variance: {variance}"
+    
+    # Match plotting graphs
+    match = re.match(r'plot\s*(.+)', question.lower())
+    if match:
+        expression = match.groups()[0]
+        x = sp.symbols('x')
+        expr = sp.sympify(expression)
+        sp.plot(expr, (x, -10, 10))
+        plt.savefig('plot.png')
+        plt.close()
+        with open('plot.png', 'rb') as image_file:
+            encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+        return f'<img src="data:image/png;base64,{encoded_string}" />'
+    
     return None
 
 def ask_nlp(question, context):
