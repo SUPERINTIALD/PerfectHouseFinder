@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <title>{% block title %}PefectHomeFinder{% endblock %}</title>
+</head>
+
+<body>
+    <header class="container">
+        <nav>
+            <ul class="nav-left">
+                <li>
+                    <h1><a href="/">PHF</a></h1>
+                </li>
+            </ul>
+            <ul class="nav-right">
+                {% if username %}
+                <li>
+                    <a href="/logout">
+                        <button>Log out</button>
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="/login">
+                        <button>Log in</button>
+                    </a>
+                </li>
+                <li>
+                    <a href="/register">
+                        <button>Register</button>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        {% block main %}{% endblock %}
+    </main>
+
+    <footer class="container">
+        <p>&copy; 2023 PHF. All rights reserved.</p>
+    </footer>
+</body>
+</html>
