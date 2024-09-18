@@ -25,3 +25,46 @@ The Perfect Home Finder is a data mining project designed to assist prospective 
     - School ratings API
     - Neighborhood quality API
 - **Database**: SQLite or PostgreSQL for storing user preferences and retrieved data
+
+
+
+
+
+
+
+
+
+
+
+
+## How to Run
+
+To run the Perfect Home Finder application, follow these steps:
+
+1. **Install Dependencies**:
+    ```sh
+    pip install flask
+    pip install flask-transformers
+    pip install datasets
+    pip install sympy
+    pip install -r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2/requirements.txt
+    ```
+
+2. **Run the Application**:
+    ```sh
+    python app.py
+    ```
+
+### Additional Information
+
+- **Libraries Used**:
+    - `matplotlib` for data visualization
+    - `pandas` for data manipulation
+    - `huggingface` for datasets
+
+- **NLP Testing**:
+    - Use `testnlp.py` for natural language processing testing.
+
+- **Development Server**:
+    - Launch the development server using `python app.py`.
+
