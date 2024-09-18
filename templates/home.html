@@ -49,7 +49,7 @@
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>
                 <a href="/home" class="btn btn-primary mt-3">Find a Home</a>
-            </div>
+        
         </section>
         <section class="features-section" data-aos="fade-up">
             <div class="container">
@@ -61,6 +61,20 @@
                 </ul>
             </div>
         </section>
+
+        <section>
+            <h1>Ask a Question</h1>
+            <form id="question-form">
+                <input type="text" id="question" name="question" placeholder="Type your question here" required>
+                <button type="submit" class="btn btn-primary">Ask </button>
+            </form>
+            <div id="chat-box">
+                <h2>Chat Box</h2>
+                <div id="chat-content"></div>
+            </div>
+
+            
+        </section>
     </main>
     <footer>
         <div class="container">
@@ -71,6 +85,6 @@
     <script src="../static/vendors/node_modules/glightbox/dist/js/glightbox.min.js" defer></script>
     <!-- <script src="../static/vendors/node_modules/swiper/swiper-bundle.min.js" defer></script> -->
     <script src="../static/js/main.js"></script>
-    <script>src="../static/js/search.js"</script>
+    <script src="../static/js/search.js"></script>
 </body>
 </html>

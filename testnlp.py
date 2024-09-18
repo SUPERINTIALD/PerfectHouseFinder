@@ -37,7 +37,7 @@ nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
 # amenities_info = extract_info(amenities_data['train'], 'amenities')
 
 # Combine all contexts into a single context string
-context = f"""
+context = """
 Perfect Home Finder helps you find the best homes available in various regions. 
 We provide expert advice and a wide range of properties to choose from, including urban, suburban, and rural areas. 
 Our services include property valuation, neighborhood analysis, and personalized home recommendations. 

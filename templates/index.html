@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 
 <html lang="en">
-<head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Home Finder</title>
-    <!-- <link rel="stylesheet" href="../static/css/pico.amber.min.css"> -->
-    <link rel="stylesheet" href="../static/css/main.css">
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perfect Home Finder</title>
+        <link href="../static/vendors/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../static/vendors/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+        <link href="../static/vendors/node_modules/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
+        <link href="../static/css/main.css" rel="stylesheet">
+    </head>
 <body>
-    <header>
-        <h1>Welcome to Home Finder</h1>
-        <nav>
+    <header id="header" class="header d-flex flex-column justify-content-center">
+        <i class="header-toggle d-xl-none bi bi-list"></i>
+        <nav id="navmenu" class="navmenu">
             <ul>
                 <li><a href="/home">Home</a></li>
                 <li><a href="/about">About Us</a></li>
@@ -34,7 +35,22 @@
                 <li>Trusted by thousands</li>
             </ul>
         </section>
+
+
+
+        <div id="chatbox" class="chatbox"></div>
+            <!-- Messages will appear here -->
+        </div>
+        <form id="chatForm">
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <input type="text" id="message" name="message" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
     </main>
+    <script src="../static/js/chat.js"></script>
+
     <footer>
         <p>&copy; 2023 Home Finder. All rights reserved.</p>
     </footer>
