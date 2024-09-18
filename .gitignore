@@ -1,1 +1,14 @@
-static/vendor/
+./static/vendor/node_modules/
+./static/vendor/bower_components/
+./static/vendor/webpack/
+./static/vendor/webpack-dev-server/
+./static/vendor/.cache/
+./static/vendor/.DS_Store
+./static/vendor/.npm/
+./static/vendor/.yarn/
+./static/vendor/.yarn-integrity
+./static/vendor/.yarn-cache/
+./static/vendor/.yarn-metadata/
+./static/vendor/.yarnrc
+./static/vendor/.yarnrc.yml
+
