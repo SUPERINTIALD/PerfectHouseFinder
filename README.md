@@ -1,5 +1,4 @@
-Perfect Home Finder
-# Overview
+# The Perfect Home Finder
 
 The Perfect Home Finder is a data mining project designed to assist prospective homebuyers in finding their ideal home. By analyzing various factors such as crime rates, neighborhood quality, school ratings, quality of life, and proximity to landfills, this tool provides a comprehensive overview of potential homes based on user preferences. Leveraging APIs and natural language processing (NLP), it aims to deliver tailored and insightful recommendations.
 
@@ -18,16 +17,13 @@ The Perfect Home Finder is a data mining project designed to assist prospective 
     - `requests` for API calls
     - `pandas` for data manipulation
     - `numpy` for numerical analysis
-    - `nltk` or `spaCy` for natural language processing
+    - `flask-transformers` for natural language processing
     - `matplotlib` or `seaborn` for data visualization
 - **APIs**:
     - Crime data API
     - School ratings API
     - Neighborhood quality API
 - **Database**: SQLite or PostgreSQL for storing user preferences and retrieved data
-
-
-
 
 
 
