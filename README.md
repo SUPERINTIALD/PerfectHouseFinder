@@ -43,8 +43,10 @@ To run the Perfect Home Finder application, follow these steps:
     pip install transformers #May need to enable Long Path for Windows
     pip install datasets
     pip install sympy
-    pip install -r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2/requirements.txt #Below are all installation of https://raw.githubusercontent.com/intro-stat-learning/#ISLP_labs/v2/requirements.txt, however if it doesn't work plz try installing individually
-
+    pip install -r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2/requirements.txt 
+    ```
+# Below are all installation of https://raw.githubusercontent.com/intro-stat-learning/#ISLP_labs/v2/requirements.txt, however if it doesn't work plz try installing individually
+    ```sh
     pip install pandas
     pip install ISLP
     pip install numpy
