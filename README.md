@@ -40,10 +40,28 @@ To run the Perfect Home Finder application, follow these steps:
 1. **Install Dependencies**:
     ```sh
     pip install flask
-    pip install flask-transformers
+    pip install transformers #May need to enable Long Path for Windows
     pip install datasets
     pip install sympy
-    pip install -r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2/requirements.txt
+    pip install -r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2/requirements.txt #Below are all installation of https://raw.githubusercontent.com/intro-stat-learning/#ISLP_labs/v2/requirements.txt, however if it doesn't work plz try installing individually
+
+    pip install pandas
+    pip install ISLP
+    pip install numpy
+    pip install lxml
+    pip install scikit-learn
+    pip install joblib
+    pip install statsmodels
+    pip install lifelines
+    pip install pygam
+    pip install torch
+    pip install pytorch_lightning
+    pip install torchmetrics
+    pip install torchvision
+# Installing Deep Learning Frameworks::::
+    pip install torchinfo
+    pip install torch torchvision torchaudio
+    pip install tensorflow
     ```
 
 2. **Run the Application**:

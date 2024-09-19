@@ -36,6 +36,8 @@ tokenizer.clean_up_tokenization_spaces = True
 
 # Load the NLP pipeline with the configured tokenizer and model
 nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
+nlp_gpt2 = pipeline("text-generation", model="gpt2")
+
 # def handle_math_question(question):
 #     match = re.match(r'(\d+)\s*([+\-*/])\s*(\d+)', question.lower())
 #     if match:
@@ -197,6 +199,18 @@ For instance, cities like Denver are renowned for their diverse climates, which 
 
 Our mission at Perfect Home Finder is to facilitate a seamless home-buying experience. We pride ourselves on our customer-centric approach, ensuring that every interaction is tailored to your specific needs. From your initial inquiry to the final closing process, we are dedicated to providing support and guidance every step of the way.
 
+
+
+
+家は私たちの生活の中心であり、安心できる場所です。家のデザインや雰囲気は、住む人の個性やライフスタイルを反映します。日本の伝統的な家屋では、木材や畳が使われ、自然と調和した空間が広がっています。現代の住宅は、機能性やデザイン性を重視し、多様なスタイルが見られます。
+
+また、家は家族や友人と共に過ごす大切な場所でもあります。リビングルームでの団らんや、食卓を囲む時間は、家族の絆を深める重要な瞬間です。日本では、四季の変化を楽しむために、庭を持つ家も多く、花や緑に囲まれた環境が心を豊かにしてくれます。
+
+最近では、環境に配慮したエコ住宅やスマートホームが注目されています。これらの住宅は、省エネルギーや最新の技術を取り入れ、快適な生活を提供します。未来の家は、持続可能性を重視しながら、私たちの生活をより良いものにすることを目指しています。
+
+家は単なる建物ではなく、私たちの生活の質を向上させる重要な要素です。理想の家を見つけることは、幸せな生活を送るための第一歩です。私たちのサービスを通じて、あなたにぴったりの家を見つけるお手伝いをします。
+
+
     """
     
     # Check if the question is a math question
@@ -205,9 +219,19 @@ Our mission at Perfect Home Finder is to facilitate a seamless home-buying exper
         answer = str(math_result)
     else:
         # Use the NLP model to get the answer
-        result = ask_nlp(query, context)
-        answer = result['answer']
+        # result = ask_nlp(query, context)
+        # answer = result['answer']
+        # if re.search(r'\b(what|who|where|when|why|how)\b', query.lower()):
+            # Use the NLP model to get the answer
+            result = ask_nlp(query, context)
+            answer = result['answer']
+        # else:
+            # Use the GPT-2 model to generate text
+            # gpt2_input = context + "\n" + query
+            # gpt2_output = nlp_gpt2(query, max_length=150, truncation = True, clean_up_tokenization_spaces=True)
+            # answer = gpt2_output[0]['generated_text']
     
+    # return jsonify({'results': [answer]})
     return jsonify({'results': [answer]})
 # results = []  
 # for question in questions:
