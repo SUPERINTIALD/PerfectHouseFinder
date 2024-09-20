@@ -60,7 +60,10 @@ To run the Perfect Home Finder application, follow these steps:
     pip install pytorch_lightning
     pip install torchmetrics
     pip install torchvision
+    pip install matplotlib
+    ```
     Installing Deep Learning Frameworks::::
+    ```sh
     pip install torchinfo
     pip install torch torchvision torchaudio
     pip install tensorflow
@@ -82,3 +85,38 @@ To run the Perfect Home Finder application, follow these steps:
 - **Development Server**:
     - Launch the development server using `python app.py`.
 
+
+
+###Resources from Kaggle:
+- https://www.kaggle.com/datasets/taruntiwarihp/crime-world
+- https://www.kaggle.com/datasets/paultimothymooney/denver-crime-data/versions/457?resource=download
+
+Credits to this guy:
+- https://www.kaggle.com/paultimothymooney/datasets?page=5
+
+
+Resources we haven't used:
+- https://www.kaggle.com/datasets/chicago/chicago-crime
+- https://www.kaggle.com/datasets/theworldbank/world-bank-intl-education
+- https://www.kaggle.com/datasets/LondonDataStore/london-crime
+- https://www.kaggle.com/datasets/census/census-bureau-usa
+- https://www.kaggle.com/datasets/paultimothymooney/zillow-house-price-data
+- https://www.kaggle.com/datasets/datasf/san-francisco
+- https://www.kaggle.com/datasets/odins0n/ucf-crime-dataset
+
+- https://www.crcv.ucf.edu/projects/real-world/
+
+
+
+For schools:
+- https://www.kaggle.com/datasets/andrewmvd/us-schools-dataset
+- https://www.kaggle.com/datasets/leomartinelli/bullying-in-schools
+- https://www.kaggle.com/datasets/sahirmaharajj/college-exam-results-sat
+- https://www.kaggle.com/datasets/noriuk/us-educational-finances
+- https://www.kaggle.com/datasets/wsj/college-salaries
+- https://www.kaggle.com/datasets/sahirmaharajj/school-student-daily-attendance
+- https://www.kaggle.com/datasets/rkiattisak/student-performance-in-mathematics
+- https://www.kaggle.com/datasets/pantanjali/unemployment-dataset
+- https://www.kaggle.com/datasets/joebeachcapital/school-shootings
+- https://www.kaggle.com/datasets/noriuk/us-education-datasets-unification-project
+- https://www.kaggle.com/code/zikazika/analysis-of-world-crime

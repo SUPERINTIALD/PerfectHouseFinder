@@ -28,8 +28,10 @@ def home():
 
 
 # Load the NLP model
-tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased-distilled-squad')
-model = AutoModelForQuestionAnswering.from_pretrained('distilbert-base-uncased-distilled-squad')
+# tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased-distilled-squad')
+# model = AutoModelForQuestionAnswering.from_pretrained('distilbert-base-uncased-distilled-squad')
+tokenizer = AutoTokenizer.from_pretrained('deepset/roberta-base-squad2')
+model = AutoModelForQuestionAnswering.from_pretrained('deepset/roberta-base-squad2')
 
 # Set clean_up_tokenization_spaces to True in the tokenizer configuration
 tokenizer.clean_up_tokenization_spaces = True
@@ -185,33 +187,20 @@ def chat():
     Our goal is to help you find the perfect home that meets all your needs and preferences.
     Perfect Home Finder is your ultimate resource for discovering the best homes available across various regions. We specialize in assisting homebuyers with tailored advice and a comprehensive selection of properties, ensuring you find the perfect fit for your lifestyle and budget. 
 
-Our team of real estate experts provides in-depth property valuation services, helping you understand the true worth of a home based on market trends and neighborhood dynamics. We also conduct thorough neighborhood analyses, giving you insights into the quality of life, safety, and community features in the areas you are considering.
+    Our team of real estate experts provides in-depth property valuation services, helping you understand the true worth of a home based on market trends and neighborhood dynamics. We also conduct thorough neighborhood analyses, giving you insights into the quality of life, safety, and community features in the areas you are considering.
 
-We cater to a broad spectrum of home prices, ranging from affordable starter homes ideal for first-time buyers to luxurious estates equipped with high-end amenities. No matter your financial situation, we strive to present options that align with your needs and preferences.
+    We cater to a broad spectrum of home prices, ranging from affordable starter homes ideal for first-time buyers to luxurious estates equipped with high-end amenities. No matter your financial situation, we strive to present options that align with your needs and preferences.
 
-In addition to helping you find the right home, we offer valuable insights into local amenities. Our database includes information on schools—both K-12 and colleges—allowing you to assess the educational opportunities available in the vicinity. We provide ratings and reviews for schools, so you can make informed decisions based on quality of education, extracurricular activities, and overall student performance.
+    In addition to helping you find the right home, we offer valuable insights into local amenities. Our database includes information on schools—both K-12 and colleges—allowing you to assess the educational opportunities available in the vicinity. We provide ratings and reviews for schools, so you can make informed decisions based on quality of education, extracurricular activities, and overall student performance.
 
-Moreover, we understand the importance of community features, so we include details about nearby parks, recreational areas, and shopping centers. Whether you're looking for family-friendly activities, outdoor spaces for leisure, or convenient access to retail options, we have you covered.
+    Moreover, we understand the importance of community features, so we include details about nearby parks, recreational areas, and shopping centers. Whether you're looking for family-friendly activities, outdoor spaces for leisure, or convenient access to retail options, we have you covered.
 
-Safety is a top priority when selecting a neighborhood, and we equip you with comprehensive information on crime rates in different areas. By analyzing local crime statistics, we help you make informed choices about the safety of your potential new home, allowing you to prioritize peace of mind.
+    Safety is a top priority when selecting a neighborhood, and we equip you with comprehensive information on crime rates in different areas. By analyzing local crime statistics, we help you make informed choices about the safety of your potential new home, allowing you to prioritize peace of mind.
 
-For instance, cities like Denver are renowned for their diverse climates, which include cold winters and warm summers. They are also celebrated for their vibrant communities and overall safety, making them desirable locations for families and individuals alike. Whether you prefer urban settings with bustling nightlife or quiet suburban environments, we assist you in navigating your options.
+    For instance, cities like Denver are renowned for their diverse climates, which include cold winters and warm summers. They are also celebrated for their vibrant communities and overall safety, making them desirable locations for families and individuals alike. Whether you prefer urban settings with bustling nightlife or quiet suburban environments, we assist you in navigating your options.
 
-Our mission at Perfect Home Finder is to facilitate a seamless home-buying experience. We pride ourselves on our customer-centric approach, ensuring that every interaction is tailored to your specific needs. From your initial inquiry to the final closing process, we are dedicated to providing support and guidance every step of the way.
-
-
-
-
-家は私たちの生活の中心であり、安心できる場所です。家のデザインや雰囲気は、住む人の個性やライフスタイルを反映します。日本の伝統的な家屋では、木材や畳が使われ、自然と調和した空間が広がっています。現代の住宅は、機能性やデザイン性を重視し、多様なスタイルが見られます。
-
-また、家は家族や友人と共に過ごす大切な場所でもあります。リビングルームでの団らんや、食卓を囲む時間は、家族の絆を深める重要な瞬間です。日本では、四季の変化を楽しむために、庭を持つ家も多く、花や緑に囲まれた環境が心を豊かにしてくれます。
-
-最近では、環境に配慮したエコ住宅やスマートホームが注目されています。これらの住宅は、省エネルギーや最新の技術を取り入れ、快適な生活を提供します。未来の家は、持続可能性を重視しながら、私たちの生活をより良いものにすることを目指しています。
-
-家は単なる建物ではなく、私たちの生活の質を向上させる重要な要素です。理想の家を見つけることは、幸せな生活を送るための第一歩です。私たちのサービスを通じて、あなたにぴったりの家を見つけるお手伝いをします。
-
-
-    """
+    Our mission at Perfect Home Finder is to facilitate a seamless home-buying experience. We pride ourselves on our customer-centric approach, ensuring that every interaction is tailored to your specific needs. From your initial inquiry to the final closing process, we are dedicated to providing support and guidance every step of the way.
+    """ 
     
     # Check if the question is a math question
     math_result = handle_math_question(query)
