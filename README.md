@@ -60,12 +60,11 @@ To run the Perfect Home Finder application, follow these steps:
     pip install pytorch_lightning
     pip install torchmetrics
     pip install torchvision
-# Installing Deep Learning Frameworks::::
+    Installing Deep Learning Frameworks::::
     pip install torchinfo
     pip install torch torchvision torchaudio
     pip install tensorflow
     ```
-
 2. **Run the Application**:
     ```sh
     python app.py
@@ -75,12 +74,11 @@ To run the Perfect Home Finder application, follow these steps:
 
 - **Libraries Used**:
     - `matplotlib` for data visualization
-    - `pandas` for data manipulation
     - `huggingface` for datasets
 
 - **NLP Testing**:
     - Use `testnlp.py` for natural language processing testing.
-
+    - Use `testnlpDialo.py` for Dialo Gpt testing
 - **Development Server**:
     - Launch the development server using `python app.py`.
 
