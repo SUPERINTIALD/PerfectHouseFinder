@@ -46,7 +46,28 @@ To run the Perfect Home Finder application, follow these steps:
     ```sh
     uv venv
     ```
+    Use:
+    ```sh
+    .\venv\Scripts\activate
+    ```
+    To activate your virtual env.
 
+    To deactivate:
+    ```sh
+    deactivate
+    ```
+    If by chance you need to delete your venv:
+    For Windows:
+    ```sh
+    Remove-Item -Recurse -Force .\.venv\
+    ```
+    For Mac OSX:
+    ```sh
+    python rm -rf .\.venv\
+    ```
+
+
+    Dependencies installed invididually:
     ```sh
     pip install flask
     pip install transformers #May need to enable Long Path for Windows
