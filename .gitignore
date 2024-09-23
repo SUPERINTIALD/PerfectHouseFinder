@@ -1,2 +1,3 @@
 ./database/*
 database/datasetsCrime/crime.csv
+./venv/*
