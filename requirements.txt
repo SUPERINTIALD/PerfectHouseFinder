@@ -1,6 +1,7 @@
 flask
 transformers
 datasets
+-r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2/requirements.txt 
 sympy
 numpy>=1.7.1
 scipy>=0.9
@@ -10,8 +11,6 @@ scikit-learn>=1.2
 joblib
 statsmodels>=0.13
 lifelines
-pygam
-l0bnb==1.0.0
 ISLP
 torch
 pytorch_lightning
@@ -19,4 +18,3 @@ torchmetrics
 torchvision
 torchinfo
 tensorflow
-openllm

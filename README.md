@@ -38,6 +38,15 @@ The Perfect Home Finder is a data mining project designed to assist prospective 
 To run the Perfect Home Finder application, follow these steps:
 
 1. **Install Dependencies**:
+    First install uv since it will make pip install much faster for requirements.txt
+    ```sh
+    pip install uv
+    ```
+    Then create a venv through:
+    ```sh
+    uv venv
+    ```
+
     ```sh
     pip install flask
     pip install transformers #May need to enable Long Path for Windows
@@ -67,6 +76,7 @@ To run the Perfect Home Finder application, follow these steps:
     pip install torchinfo
     pip install torch torchvision torchaudio
     pip install tensorflow
+    pip install openllm
     ```
 2. **Run the Application**:
     ```sh
