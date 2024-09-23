@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Chat</title>
+    <script>
+        async function sendMessage() {
+            const question = document.getElementById('question').value;
+            const contextResponse = await fetch('/get_context', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ question })
+            });
+            const contextData = await contextResponse.json();
+            const context = contextData.context;
+            const gptResponse = await fetch('/ask_gpt4all', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ question, context })
+            });
+            const gptData = await gptResponse.json();
+            const response = gptData.response;
+
+            document.getElementById('chat').innerHTML += `<p><strong>You:</strong> ${question}</p>`;
+            document.getElementById('chat').innerHTML += `<p><strong>Bot:</strong> ${response}</p>`;
+        }
+    </script>
+</head>
+<body>
+    <div id="chat"></div>
+    <input type="text" id="question" placeholder="Ask a question...">
+    <button onclick="sendMessage()">Send</button>
+</body>
+</html>

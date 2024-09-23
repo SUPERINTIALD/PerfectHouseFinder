@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import base64
 import io
 
-
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -28,8 +28,8 @@ def home():
 
 
 # Load the NLP model
-# tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased-distilled-squad')
-# model = AutoModelForQuestionAnswering.from_pretrained('distilbert-base-uncased-distilled-squad')
+    # tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased-distilled-squad')
+    # model = AutoModelForQuestionAnswering.from_pretrained('distilbert-base-uncased-distilled-squad')
 tokenizer = AutoTokenizer.from_pretrained('deepset/roberta-base-squad2')
 model = AutoModelForQuestionAnswering.from_pretrained('deepset/roberta-base-squad2')
 
@@ -39,22 +39,19 @@ tokenizer.clean_up_tokenization_spaces = True
 # Load the NLP pipeline with the configured tokenizer and model
 nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
 nlp_gpt2 = pipeline("text-generation", model="gpt2")
+#Get school data
+school_data = load_dataset('mw4/schools')
+crime_data = pd.read_csv('./database/datasetsCrime/crime.csv/crime.csv')
 
-# def handle_math_question(question):
-#     match = re.match(r'(\d+)\s*([+\-*/])\s*(\d+)', question.lower())
-#     if match:
-#         num1, operator, num2 = match.groups()
-#         num1, num2 = int(num1), int(num2)
-#         if operator == '+':
-#             return num1 + num2
-#         elif operator == '-':
-#             return num1 - num2
-#         elif operator == '*':
-#             return num1 * num2
-#         elif operator == '/':
-#             return num1 / num2
-            
-#     return None
+
+print("First 10 lines of the school dataset:")
+for i, item in enumerate(school_data['train']):
+    if i >= 10:
+        break
+    print(item)
+
+
+#Get math questions:
 def handle_math_question(question):
     # Match basic arithmetic operations
     match = re.match(r'(\d+)\s*([+\-*/])\s*(\d+)', question.lower())
@@ -165,18 +162,11 @@ def handle_math_question(question):
     
     return None
 
-def ask_nlp(question, context):
-    return nlp(question=question, context=context, clean_up_tokenization_spaces=True)
 
 
 
-@app.route('/chat', methods=['POST'])
-def chat():
-    data = request.get_json()
-    query = data['query']
-    
-    # Example context (you should replace this with your actual data)
-    context = """
+#General Info about our company
+general_info = """
     Perfect Home Finder helps you find the best homes available in various regions. 
     We provide expert advice and a wide range of properties to choose from, including urban, suburban, and rural areas. 
     Our services include property valuation, neighborhood analysis, and personalized home recommendations. 
@@ -201,19 +191,98 @@ def chat():
 
     Our mission at Perfect Home Finder is to facilitate a seamless home-buying experience. We pride ourselves on our customer-centric approach, ensuring that every interaction is tailored to your specific needs. From your initial inquiry to the final closing process, we are dedicated to providing support and guidance every step of the way.
     """ 
+
+def extract_crime_info(df):
+    info = {}
+    for _, row in df.iterrows():
+        location = str(row['NEIGHBORHOOD_ID']).strip().capitalize()  # Convert to str and handle missing values
+        offense_type = row['OFFENSE_TYPE_ID']
+        if location in info:
+            info[location].append(offense_type)
+        else:
+            info[location] = [offense_type]
     
+    # Calculate the percentage of each offense type
+    for location, offenses in info.items():
+        total_offenses = len(offenses)
+        offense_counts = pd.Series(offenses).value_counts(normalize=True) * 100
+        info[location] = offense_counts.to_dict()
+    
+    return info
+
+def extract_school_info(dataset):
+    info = {}
+    for item in dataset:
+        if 'name' in item:
+            parts = item['name'].split(',')
+            if len(parts) > 1:
+                location = parts[-1].strip().capitalize()
+                school_name = parts[0].strip()
+                info[location] = school_name
+    return info
+
+# Extract  information
+# crime_info = extract_crime_info(crime_data)
+school_info = extract_school_info(school_data['train'])
+
+
+
+def get_relevant_context(question):
+    location_match = re.search(r'in (\w+)', question.lower())
+    if location_match:
+        location = location_match.group(1).strip().capitalize()
+        # crime_context = f"Crime rate in {location}: {crime_info.get(location, 'No data available')}"
+        school_context = f"School rating in {location}: {school_info.get(location, 'No data available')}"
+        return f"{general_info}\n{school_context}"
+    return general_info   
+# def get_relevant_context(question):
+#     locations = re.findall(r'in (\w+)', question.lower())
+#     contexts = []
+#     for loc in locations:
+#         location = loc.strip().capitalize()
+#         crime_data = crime_info.get(location, {})
+#         if crime_data:
+#             crime_context = f"Crime types in {location}: {', '.join([f'{k}: {v:.2f}%' for k, v in crime_data.items()])}"
+#         else:
+#             crime_context = f"Crime types in {location}: No data available"
+#         school_context = f"Schools in {location}: {', '.join(school_info.get(location, ['No data available']))}"
+#         contexts.append(f"{school_context}\n")
+#     return f"{general_info}\n" + "\n".join(contexts)
+
+
+
+
+
+
+
+
+
+
+def ask_nlp(question, context):
+    return nlp(question=question, context=context, clean_up_tokenization_spaces=True)
+
+
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.get_json()
+    query = data['query']
     # Check if the question is a math question
     math_result = handle_math_question(query)
     if math_result is not None:
         answer = str(math_result)
     else:
+        relevant_context = get_relevant_context(query)
+        result = ask_nlp(query, relevant_context)
+        answer = result['answer']
+
         # Use the NLP model to get the answer
         # result = ask_nlp(query, context)
         # answer = result['answer']
         # if re.search(r'\b(what|who|where|when|why|how)\b', query.lower()):
             # Use the NLP model to get the answer
-            result = ask_nlp(query, context)
-            answer = result['answer']
+            # result = ask_nlp(query, context)
+            # answer = result['answer']
         # else:
             # Use the GPT-2 model to generate text
             # gpt2_input = context + "\n" + query

@@ -120,3 +120,20 @@ For schools:
 - https://www.kaggle.com/datasets/joebeachcapital/school-shootings
 - https://www.kaggle.com/datasets/noriuk/us-education-datasets-unification-project
 - https://www.kaggle.com/code/zikazika/analysis-of-world-crime
+
+
+
+- HuggingFace:
+https://huggingface.co/docs/transformers/en/index
+https://huggingface.co/transformers/v3.5.1/installation.html
+https://huggingface.co/microsoft/DialoGPT-medium
+https://huggingface.co/deepset/roberta-base-squad2
+- https://haystack.deepset.ai/tutorials/01_basic_qa_pipeline
+
+
+For maps:
+https://www.openstreetmap.org/export#map=15/40.56215/-105.06626
+https://crimegrade.org/
+- https://crimegrade.org/safest-places-in-denver-co/
+https://www.zillow.com/
+https://developer.schooldigger.com/#plans

@@ -13,7 +13,7 @@ tokenizer.clean_up_tokenization_spaces = True
 nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
 
 # Load datasets from Hugging Face
-crime_data = load_dataset("community-datasets/crime_and_punish")
+# crime_data = load_dataset("community-datasets/crime_and_punish")
 school_data = load_dataset('mw4/schools')
 
 # Print the first 10 lines of the raw datasets for inspection
