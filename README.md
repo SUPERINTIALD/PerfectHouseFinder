@@ -57,11 +57,11 @@ To run the Perfect Home Finder application, follow these steps:
     deactivate
     ```
     If by chance you need to delete your venv:
-    For Windows:
+    - For Windows:
     ```sh
     Remove-Item -Recurse -Force .\.venv\
     ```
-    For Mac OSX:
+    - For Mac OSX:
     ```sh
     python rm -rf .\.venv\
     ```
