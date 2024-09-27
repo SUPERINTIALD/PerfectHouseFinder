@@ -109,7 +109,25 @@ To run the Perfect Home Finder application, follow these steps:
     python app.py
     ```
 
-### Additional Information
+
+### OPENLLM Hello
+```
+Install CUDA 
+https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_local
+```sh
+nvcc --version
+```
+I had the RTX 4070
+```sh
+pip install nvidia-pyindex
+pip install nvidia-nccl
+
+```sh 
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+```
+
+
+### Additional Information 
 
 - **Libraries Used**:
     - `matplotlib` for data visualization
