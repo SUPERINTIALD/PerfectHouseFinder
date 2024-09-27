@@ -233,8 +233,13 @@ def get_relevant_context(question):
         location = location_match.group(1).strip().capitalize()
         # crime_context = f"Crime rate in {location}: {crime_info.get(location, 'No data available')}"
         school_context = f"School rating in {location}: {school_info.get(location, 'No data available')}"
-        return f"{general_info}\n{school_context}"
+        # return f"{general_info}\n{school_context}"
+        return f"{general_info}\n"
+
     return general_info   
+
+
+
 # def get_relevant_context(question):
 #     locations = re.findall(r'in (\w+)', question.lower())
 #     contexts = []

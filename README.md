@@ -50,6 +50,11 @@ To run the Perfect Home Finder application, follow these steps:
     ```sh
     .\venv\Scripts\activate
     ```
+    You may need to run:
+    ```
+    Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+    ```
+    In order to authenticate....
     To activate your virtual env.
 
     To deactivate:
@@ -165,6 +170,39 @@ https://huggingface.co/deepset/roberta-base-squad2
 For maps:
 https://www.openstreetmap.org/export#map=15/40.56215/-105.06626
 https://crimegrade.org/
+- https://developers.google.com/maps/
+
+
 - https://crimegrade.org/safest-places-in-denver-co/
 https://www.zillow.com/
 https://developer.schooldigger.com/#plans
+- https://collegescorecard.ed.gov/data/
+- https://nces.ed.gov/ipeds/use-the-data/
+- https://andyreiter.com/datasets/
+- https://github.com/eci-io/climategpt-evaluation
+- https://arxiv.org/abs/2401.09646
+- https://huggingface.co/datasets/eci-io/climate-evaluation
+
+
+
+
+Python:
+- https://pypi.org/project/openllm/
+- https://www.llama.com/llama3/license/
+
+
+
+
+- https://ralphieslist.colorado.edu/housing?bounds=40.01904,39.99459,-105.24651,-105.28277
+Something like this would be cool:
+
+
+Would be cool to write a data-to-paper kinda thing for this as well:
+- https://arxiv.org/pdf/2404.17605
+
+
+API:
+https://www.zillow.com/research/data/
+
+
+https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
