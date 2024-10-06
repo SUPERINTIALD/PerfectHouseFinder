@@ -2,7 +2,7 @@
 
 The Perfect Home Finder is a data mining project designed to assist prospective homebuyers in finding their ideal home. By analyzing various factors such as crime rates, neighborhood quality, school ratings, quality of life, and proximity to landfills, this tool provides a comprehensive overview of potential homes based on user preferences. Leveraging APIs and natural language processing (NLP), it aims to deliver tailored and insightful recommendations.
 
-## Features
+## Upcoming Features
 
 - **Data Mining**: Collect and analyze data on various factors affecting home buying decisions.
 - **API Integration**: Utilize external APIs to gather real-time data on crime rates, school ratings, neighborhood quality, geography, maps, crime map, housing information (price, bathroom, bedroom, etc), history of home if there is any, local amenities, Demographics, enviromental data, transportation, market options, legal and regulatory information, real-estate agent, market insights, integration with morgage calculators.... So far. we will add more.
