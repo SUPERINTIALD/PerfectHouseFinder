@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const chatForm = document.getElementById('chatForm');
     const chatboxMessages = document.getElementById('chatbox-messages');
     const chatboxContainer = document.getElementById('chatbox-container');
+    const chatboxHeader = document.getElementById('chatbox-header');
     const openChatboxButton = document.getElementById('open-chatbox');
     const closeChatboxButton = document.getElementById('close-chatbox');
 
@@ -54,5 +55,45 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function clearChatbox() {
         chatboxMessages.innerHTML = '';
-    }z``
+    }
+    // Make the chatbox draggable
+    chatboxHeader.addEventListener('mousedown', function(e) {
+        let offsetX = e.clientX - chatboxContainer.getBoundingClientRect().left;
+        let offsetY = e.clientY - chatboxContainer.getBoundingClientRect().top;
+
+        function onMouseMove(e) {
+            let newLeft = e.clientX - offsetX;
+            let newTop = e.clientY - offsetY;
+
+            // Ensure the chatbox stays within the viewport boundaries
+            if (newLeft < 0) newLeft = 0;
+            if (newTop < 0) newTop = 0;
+            if (newLeft + chatboxContainer.offsetWidth > window.innerWidth) {
+                newLeft = window.innerWidth - chatboxContainer.offsetWidth;
+            }
+            if (newTop + chatboxContainer.offsetHeight > window.innerHeight) {
+                newTop = window.innerHeight - chatboxContainer.offsetHeight;
+            }
+
+            chatboxContainer.style.left = `${newLeft}px`;
+            chatboxContainer.style.top = `${newTop}px`;
+        }
+
+        function onMouseUp() {
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    });
+    // chatboxContainer.addEventListener('resize', function() {
+    //     const rect = chatboxContainer.getBoundingClientRect();
+    //     if (rect.right > window.innerWidth) {
+    //         chatboxContainer.style.width = `${window.innerWidth - rect.left}px`;
+    //     }
+    //     if (rect.bottom > window.innerHeight) {
+    //         chatboxContainer.style.height = `${window.innerHeight - rect.top}px`;
+    //     }
+    // });
 });
