@@ -18,3 +18,5 @@ torchmetrics
 torchvision
 torchinfo
 tensorflow
+tf-keras
+requests

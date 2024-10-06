@@ -80,7 +80,12 @@ To run the Perfect Home Finder application, follow these steps:
     pip install sympy
     pip install -r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2/requirements.txt 
     ```
-    Below are all installation of https://raw.githubusercontent.com/intro-stat-learning/#ISLP_labs/v2/requirements.txt, however if it doesn't work plz try installing individually
+    Below are all installation of https://raw.githubusercontent.com/intro-stat-learning/#ISLP_labs/v2/requirements.txt, however if it doesn't work plz try installing individually:
+    Furthermore you will need to download:
+    https://visualstudio.microsoft.com/ja/visual-cpp-build-tools/
+    Then download Build Tools
+
+
     ```sh
     pip install pandas
     pip install ISLP
