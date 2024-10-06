@@ -62,20 +62,37 @@
                 </ul>
             </div>
         </section>
-
-        <section>
+        <!-- <section>
             <h1>Ask a Question</h1>
-            <form id="question-form">
-                <input type="text" id="question" name="question" placeholder="Type your question here" required>
-                <button type="submit" class="btn btn-primary">Ask </button>
+            <form id="chatForm">
+                <input type="text" id="message" name="message" placeholder="Type your question here" required>
+                <button type="submit" class="btn btn-primary">Ask</button>
             </form>
             <div id="chat-box">
                 <h2>Chat Box</h2>
-                <div id="chat-content"></div>
+                <div id="chatbox" class="chatbox"></div>
             </div>
+        </section> -->
+        <section>
+            <h1>Ask a Question</h1>
+            <button id="open-chatbox" class="btn btn-primary">Ask</button>
+        </section>  
 
-            
-        </section>
+        <div id="chatbox-container" class="chatbox-container">
+            <div id="chatbox-header">
+                <h2>Chat Box</h2>
+                <button id="close-chatbox" class="btn btn-secondary">Close</button>
+            </div>
+            <div id="chatbox-content" class="chatbox-content">
+                <form id="chatForm">
+                    <input type="text" id="message" name="message" placeholder="Type your question here" required>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+                <div id="chatbox-messages" class="chatbox-messages"></div>
+            </div>
+        </div>
+
+        <script src="../static/js/question.js"></script>
     </main>
     <footer>
         <div class="container">

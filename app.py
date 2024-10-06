@@ -8,6 +8,8 @@ import sympy as sp
 import matplotlib.pyplot as plt
 import base64
 import io
+import numpy as np
+
 
 import pandas as pd
 
@@ -40,15 +42,15 @@ tokenizer.clean_up_tokenization_spaces = True
 nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
 nlp_gpt2 = pipeline("text-generation", model="gpt2")
 #Get school data
-school_data = load_dataset('mw4/schools')
-crime_data = pd.read_csv('./database/datasetsCrime/crime.csv/crime.csv')
+# school_data = load_dataset('mw4/schools')
+# crime_data = pd.read_csv('./database/datasetsCrime/crime.csv/crime.csv')
 
 
-print("First 10 lines of the school dataset:")
-for i, item in enumerate(school_data['train']):
-    if i >= 10:
-        break
-    print(item)
+# print("First 10 lines of the school dataset:")
+# for i, item in enumerate(school_data['train']):
+#     if i >= 10:
+#         break
+#     print(item)
 
 
 #Get math questions:
@@ -131,17 +133,47 @@ def handle_math_question(question):
     
     # Match plotting graphs
     match = re.match(r'plot\s*(.+)', question.lower())
+    match = re.match(r'plot\s*(.+)', question.lower())
     if match:
         expression = match.groups()[0]
         x = sp.symbols('x')
         expr = sp.sympify(expression)
-        sp.plot(expr, (x, -10, 10))
-        plt.savefig('plot.png')
-        plt.pause(5)
-        plt.close()
-        with open('plot.png', 'rb') as image_file:
-            encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+
+        # Create a range of x values
+        x_vals = np.linspace(-10, 10, 400)
+        y_vals = [expr.subs(x, val) for val in x_vals]  # Evaluate the expression
+
+        # Create the plot using Matplotlib
+        plt.figure()
+        plt.plot(x_vals, y_vals)
+        plt.title(f'Plot of {expression}')
+        plt.xlabel('x')
+        plt.ylabel('f(x)')
+        
+        # Save the plot to a BytesIO object
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')  # Save the plot to buf
+        plt.close()  # Close the plot to free resources
+        
+        # Encode the plot as a base64 string
+        buf.seek(0)
+        encoded_string = base64.b64encode(buf.read()).decode('utf-8')
         return f'<img src="data:image/png;base64,{encoded_string}" />'
+    
+    return None
+    # if match:
+    #     expression = match.groups()[0]
+    #     x = sp.symbols('x')
+    #     expr = sp.sympify(expression)
+    #     sp.plot(expr, (x, -10, 10), show = False)
+    #     plt.savefig('plot.png')
+    #     # plt.pause(5)
+    #     plt.close()
+    #     with open('plot.png', 'rb') as image_file:
+    #         encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+    #     return f'<img src="data:image/png;base64,{encoded_string}" />'
+    # return "No plot command found."
+
     # TOO MUCH RUNTIME
     # match = re.match(r'plot\s*(.+)', question.lower())
     # if match:
@@ -160,7 +192,7 @@ def handle_math_question(question):
     #     encoded_string = base64.b64encode(buf.read()).decode('utf-8')
     #     return f'<img src="data:image/png;base64,{encoded_string}" />'
     
-    return None
+    # return None
 
 
 
@@ -192,38 +224,38 @@ general_info = """
     Our mission at Perfect Home Finder is to facilitate a seamless home-buying experience. We pride ourselves on our customer-centric approach, ensuring that every interaction is tailored to your specific needs. From your initial inquiry to the final closing process, we are dedicated to providing support and guidance every step of the way.
     """ 
 
-def extract_crime_info(df):
-    info = {}
-    for _, row in df.iterrows():
-        location = str(row['NEIGHBORHOOD_ID']).strip().capitalize()  # Convert to str and handle missing values
-        offense_type = row['OFFENSE_TYPE_ID']
-        if location in info:
-            info[location].append(offense_type)
-        else:
-            info[location] = [offense_type]
+# def extract_crime_info(df):
+#     info = {}
+#     for _, row in df.iterrows():
+#         location = str(row['NEIGHBORHOOD_ID']).strip().capitalize()  # Convert to str and handle missing values
+#         offense_type = row['OFFENSE_TYPE_ID']
+#         if location in info:
+#             info[location].append(offense_type)
+#         else:
+#             info[location] = [offense_type]
     
-    # Calculate the percentage of each offense type
-    for location, offenses in info.items():
-        total_offenses = len(offenses)
-        offense_counts = pd.Series(offenses).value_counts(normalize=True) * 100
-        info[location] = offense_counts.to_dict()
+#     # Calculate the percentage of each offense type
+#     for location, offenses in info.items():
+#         total_offenses = len(offenses)
+#         offense_counts = pd.Series(offenses).value_counts(normalize=True) * 100
+#         info[location] = offense_counts.to_dict()
     
-    return info
+#     return info
 
-def extract_school_info(dataset):
-    info = {}
-    for item in dataset:
-        if 'name' in item:
-            parts = item['name'].split(',')
-            if len(parts) > 1:
-                location = parts[-1].strip().capitalize()
-                school_name = parts[0].strip()
-                info[location] = school_name
-    return info
+# def extract_school_info(dataset):
+#     info = {}
+#     for item in dataset:
+#         if 'name' in item:
+#             parts = item['name'].split(',')
+#             if len(parts) > 1:
+#                 location = parts[-1].strip().capitalize()
+#                 school_name = parts[0].strip()
+#                 info[location] = school_name
+#     return info
 
 # Extract  information
 # crime_info = extract_crime_info(crime_data)
-school_info = extract_school_info(school_data['train'])
+# school_info = extract_school_info(school_data['train'])
 
 
 
