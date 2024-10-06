@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeChatboxButton = document.getElementById('close-chatbox');
 
     openChatboxButton.addEventListener('click', function() {
-        chatboxContainer.classList.add('open');
+        chatboxContainer.classList.toggle('open');
     });
 
     closeChatboxButton.addEventListener('click', function() {

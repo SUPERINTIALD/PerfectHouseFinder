@@ -1,4 +1,4 @@
-/* main.css */
+main.css
 :root {
     --primary-color: #333;
     --secondary-color: #77aaff;
@@ -94,9 +94,6 @@ footer p {
 
 
 /* CHATBOT */
-
-
-
 #chatbox {
     border: 1px solid #ccc;
     padding: 10px;
@@ -178,3 +175,281 @@ footer p {
     display: block;
     margin-bottom: 5px;
 }
+
+/* 
+.chatbox-container {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 10000; 
+}
+
+.chatbox-container.open {
+    display: block;
+}
+
+#chatbox-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #ccc;
+}
+
+#chatbox-content {
+    padding: 10px;
+    height: calc(100% - 50px); 
+    flex-direction: column;
+}
+
+#chatbox-messages {
+    max-height: 200px;
+
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.message {
+    margin-bottom: 10px;
+}
+
+.message strong {
+    display: block;
+    margin-bottom: 5px;
+}
+    */
+#close-chatbox {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+} 
+
+
+/* 
+# Contact form 
+*/
+/* body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+} */
+.contact-form {
+    /* background: #fff; */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.contact-form h1 {
+    color: #ef4b4c;
+    margin-bottom: 20px;
+}
+
+
+
+/* Smooth scroll */
+:root {
+    --scroll-behavior: smooth;
+}
+:root {
+    --nav-color: #45505b;
+    --nav-hover-color: #007bff;
+    --nav-mobile-color: #007bff;
+    --nav-dropdown-color: #007bff;
+    --nav-dropdown-hover-color: #007bff;
+    --nav-dropdown-mobile-color: #007bff;
+    --nav-dropdown-background-color: #f8f9fa;
+}
+
+:root { 
+    --background-color: #ffffff; /* Background color for the entire website, including individual sections */
+    --default-color: #272829; /* Default color used for the majority of the text content across the entire website */
+    --heading-color: #45505b; /* Color for headings, subheadings and title throughout the website */
+    --accent-color: #0563bb; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+    --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+    --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+}
+
+.light-background {
+--background-color: #f9f9f9;
+--surface-color: #ffffff;
+}
+
+
+
+  /*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+.navmenu {
+    padding: 0;
+    z-index: 9997;
+}
+
+.navmenu ul {
+list-style: none;
+padding: 0 0 20px 0;
+margin: 0;
+width: 140px;
+}
+
+.navmenu a,
+.navmenu a:focus {
+color: var(--nav-color);
+font-family: var(--nav-font);
+display: flex;
+align-items: center;
+padding: 10px 18px;
+margin-bottom: 8px;
+font-size: 15px;
+border-radius: 50px;
+background: color-mix(in srgb, var(--default-color), transparent 92%);
+height: 56px;
+width: 100%;
+overflow: hidden;
+transition: 0.3s;
+}
+
+.navmenu a i,
+.navmenu a:focus i {
+font-size: 20px;
+}
+
+.navmenu a span,
+.navmenu a:focus span {
+padding: 0 5px 0 7px;
+}
+
+@media (min-width: 992px) {
+
+.navmenu a,
+.navmenu a:focus {
+    max-width: 56px;
+}
+
+.navmenu a span,
+.navmenu a:focus span {
+    display: none;
+}
+}
+
+.navmenu a:hover,
+.navmenu .active,
+.navmenu .active:focus,
+.navmenu li:hover>a {
+color: var(--contrast-color);
+background: var(--nav-hover-color);
+}
+
+.navmenu a:hover,
+.navmenu li:hover>a {
+max-width: 100%;
+color: var(--contrast-color);
+}
+
+.navmenu a:hover span,
+.navmenu li:hover>a span {
+display: block;
+}
+
+
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+#preloader {
+position: fixed;
+inset: 0;
+z-index: 999999;
+overflow: hidden;
+background: var(--background-color);
+transition: all 0.6s ease-out;
+}
+
+#preloader:before {
+content: "";
+position: fixed;
+top: calc(50% - 30px);
+left: calc(50% - 30px);
+border: 6px solid #ffffff;
+border-color: var(--accent-color) transparent var(--accent-color) transparent;
+border-radius: 50%;
+width: 60px;
+height: 60px;
+animation: animate-preloader 1.5s linear infinite;
+}
+
+@keyframes animate-preloader {
+0% {
+    transform: rotate(0deg);
+}
+
+100% {
+    transform: rotate(360deg);
+}
+}
+
+/*--------------------------------------------------------------
+# Scroll Top Button
+--------------------------------------------------------------*/
+.scroll-top {
+position: fixed;
+visibility: hidden;
+opacity: 0;
+right: 15px;
+bottom: -15px;
+z-index: 99999;
+background-color: var(--accent-color);
+width: 44px;
+height: 44px;
+border-radius: 50px;
+transition: all 0.4s;
+}
+
+.scroll-top i {
+font-size: 24px;
+color: var(--contrast-color);
+line-height: 0;
+}
+
+.scroll-top:hover {
+background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+color: var(--contrast-color);
+}
+
+.scroll-top.active {
+visibility: visible;
+opacity: 1;
+bottom: 15px;
+}
+
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+    width: 0px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: transparent;
+    border: 5px solid transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 10px;
+    border: 6px solid transparent;
+    background-clip: content-box;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #a8bbbf;
+  }
