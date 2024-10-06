@@ -130,19 +130,29 @@ footer p {
 
 /* Homehtml, chatbox for questions: Closing and sliding feature */
 .chatbox-container {
+    /* display: none; */
     position: fixed;
-    right: -400px; /* Hidden by default */
+    bottom: 20px;
+    right: 0px;
     top: 0;
     width: 400px;
     height: 100%;
     background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
     box-shadow: -2px 0 5px rgba(0,0,0,0.5);
-    transition: right 0.3s ease;
-    z-index: 1000;
+    /* transition: right 0.3s ease; */
+    z-index: 10000; 
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.3s ease;
 }
 
 .chatbox-container.open {
-    right: 0; /* Slide in */
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+    /* right: 0; Slide in */
 }
 
 #chatbox-header {
@@ -152,6 +162,10 @@ footer p {
     padding: 10px;
     background-color: #007bff;
     color: white;
+    border-bottom: 1px solid #ccc;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+
 }
 
 #chatbox-content {

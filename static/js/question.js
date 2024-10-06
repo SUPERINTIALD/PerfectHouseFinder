@@ -23,7 +23,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Clear the input field
         messageInput.value = '';
-        
+        if (message.toLowerCase() === 'clear') {
+            clearChatbox();
+            return;
+        }
         // Send the message to the server and get the NLP response
         fetch('/chat', {
             method: 'POST',
@@ -49,4 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
         chatboxMessages.appendChild(messageElement);
         chatboxMessages.scrollTop = chatboxMessages.scrollHeight;
     }
+    function clearChatbox() {
+        chatboxMessages.innerHTML = '';
+    }z``
 });
