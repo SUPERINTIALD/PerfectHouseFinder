@@ -317,13 +317,17 @@ footer p {
 .navmenu {
     padding: 0;
     z-index: 9997;
+    border-radius: 15px;
+    /* background-color: var(--surface-color); */
 }
 
 .navmenu ul {
-list-style: none;
-padding: 0 0 20px 0;
-margin: 0;
-width: 140px;
+    list-style: none;
+    padding: 0px 0px 0px 0px;
+    margin: 0;
+    width: 250px;
+    border-radius: 15px;
+    background-color: var(--surface-color);
 }
 
 .navmenu a,
@@ -332,12 +336,12 @@ color: var(--nav-color);
 font-family: var(--nav-font);
 display: flex;
 align-items: center;
-padding: 10px 18px;
-margin-bottom: 8px;
+padding: 8px 20px;
+margin-bottom: 0px;
 font-size: 15px;
 border-radius: 50px;
 background: color-mix(in srgb, var(--default-color), transparent 92%);
-height: 56px;
+height: 40px;
 width: 100%;
 overflow: hidden;
 transition: 0.3s;
@@ -345,7 +349,8 @@ transition: 0.3s;
 
 .navmenu a i,
 .navmenu a:focus i {
-font-size: 20px;
+font-size: 15px;
+
 }
 
 .navmenu a span,
@@ -358,11 +363,13 @@ padding: 0 5px 0 7px;
 .navmenu a,
 .navmenu a:focus {
     max-width: 56px;
+    
 }
 
 .navmenu a span,
 .navmenu a:focus span {
     display: none;
+    
 }
 }
 
@@ -378,6 +385,7 @@ background: var(--nav-hover-color);
 .navmenu li:hover>a {
 max-width: 100%;
 color: var(--contrast-color);
+
 }
 
 .navmenu a:hover span,
