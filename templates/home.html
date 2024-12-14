@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfect Home Finder</title>
     <link href="../static/vendors/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../static/vendors/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- <link href="../static/vendors/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> -->
     <!-- <link href="../static/vendors/node_modules/aos/dist/aos.css" rel="stylesheet"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+
     <link href="../static/vendors/node_modules/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
     <!-- <link href="../static/vendors/node_modules/swiper/swiper-bundle.min.css" rel="stylesheet"> -->
     <link href="../static/css/main.css" rel="stylesheet">
@@ -15,13 +17,7 @@
 <body>
     <header id="header" class="header d-flex flex-column justify-content-center">
         <i class="header-toggle d-xl-none bi bi-list"></i>
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                <li><a href="/home">Home</a></li>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-        </nav>
+        {% include 'nav.html' %}
     </header>
     <main>
         <section class="hero-section" data-aos="fade-up"></section>
