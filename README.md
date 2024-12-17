@@ -9,6 +9,7 @@ The Perfect Home Finder is a data mining project designed to assist prospective 
 - **Natural Language Processing**: Enable users to interact with the system using natural language queries to refine their home search.
 - **Customizable Filters**: Allow users to set specific criteria based on their preferences to receive tailored results.
 - **Visualization**: Provide visual insights into data to help users make informed decisions.
+- **ARIMA/SARIMA/MonteCarlo**: Prediction for housing prices using time series and montecarlo.
 
 ## Technologies Used
 
@@ -35,7 +36,16 @@ The Perfect Home Finder is a data mining project designed to assist prospective 
 
 ## How to Run
 
+
+### First create environment through conda:
+1. conda create --name HouseFinder python=3.11.11
+2. conda activate HouseFinder
+3. uv pip install -r requirements.txt
+4. python app.py
+
 To run the Perfect Home Finder application, follow these steps:
+
+### First create environment through venv:
 
 1. **Install Dependencies**:
     First install uv since it will make pip install much faster for requirements.txt

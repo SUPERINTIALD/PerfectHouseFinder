@@ -3,3 +3,4 @@ database/datasetsCrime/crime.csv
 ./venv/*
 /database/*
 /venv/*
+pycache/*

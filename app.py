@@ -39,6 +39,15 @@ def contact():
 @app.route('/chat')
 def chatRoom():
     return render_template('index.html')
+@app.route('/api/data', methods=['GET'])
+def api_data():
+    # Example static JSON response
+    data = {
+        "status": "success",
+        "message": "This is the data you requested.",
+        "example_list": [1, 2, 3, 4, 5]
+    }
+    return jsonify(data), 200
 
 # Load the NLP model
     # tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased-distilled-squad')
@@ -291,6 +300,22 @@ general_info = """
     
 #     return info
 
+# Add Named Entity Recognition (NER) to Extract Location and Topic
+ner_pipeline = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-english")
+
+def extract_location_and_topic(question):
+    entities = ner_pipeline(question)
+    location = None
+    topic = None
+
+    for entity in entities:
+        if entity['entity'] == 'B-LOC' or entity['entity'] == 'I-LOC':
+            location = entity['word'].replace("##", "") if not location else location + entity['word'].replace("##", "")
+    if "school" in question.lower():
+        topic = "schools"
+    return location, topic
+
+
 def extract_school_info(dataset):
     info = {}
     for item in dataset:
@@ -299,7 +324,12 @@ def extract_school_info(dataset):
             if len(parts) > 1:
                 location = parts[-1].strip().capitalize()
                 school_name = parts[0].strip()
-                info[location] = school_name
+                if location in info:
+                    info[location].append(school_name)
+                else:
+                    info[location] = [school_name]
+
+                # info[location] = school_name #Only gets 1 school name
     return info
 
 # Extract  information
@@ -313,7 +343,13 @@ def get_relevant_context(question):
     if location_match:
         location = location_match.group(1).strip().capitalize()
         # crime_context = f"Crime rate in {location}: {crime_info.get(location, 'No data available')}"
-        school_context = f"School rating in {location}: {school_info.get(location, 'No data available')}"
+        # school_context = f"School rating in {location}: {school_info.get(location, 'No data available')}"
+        if location in school_info:
+            schools = format_list_response(school_info[location], header=f"Schools in {location}:")
+        else:
+            schools = "No schools found in this location."
+        school_context = schools
+
         return f"{general_info}\n{school_context}"
         # return f"{general_info}\n"
 
@@ -337,30 +373,60 @@ def get_relevant_context(question):
 
 
 
-
-
-
-
-
-
+def format_list_response(items, header="Here are the results:"):
+    if not items:
+        return "No data available."
+    return f"{header}\n" + "\n".join([f"- {item}" for item in items])
 
 def ask_nlp(question, context):
     return nlp(question=question, context=context, clean_up_tokenization_spaces=True)
 
 
+# @app.route('/chat', methods=['POST'])
+# def chat():
+#     data = request.get_json()
+#     query = data['query']
+#     # Check if the question is a math question
+#     math_result = handle_math_question(query)
+#     if math_result is not None:
+#         answer = str(math_result)
+#     else:
+#         relevant_context = get_relevant_context(query)
+#         result = ask_nlp(query, relevant_context)
+#         answer = result['answer']
 
+#     return jsonify({'results': [answer]})
+
+
+
+
+
+#Updated Chat system using NER
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.get_json()
     query = data['query']
+
+    # Extract location and topic
+    location, topic = extract_location_and_topic(query)
+
     # Check if the question is a math question
     math_result = handle_math_question(query)
     if math_result is not None:
         answer = str(math_result)
+    elif topic == "schools" and location:
+        if location in school_info:
+            answer = format_list_response(school_info[location], header=f"Schools in {location}:")
+        else:
+            answer = "No schools found in this location."
     else:
         relevant_context = get_relevant_context(query)
         result = ask_nlp(query, relevant_context)
         answer = result['answer']
+
+    return jsonify({'results': [answer]})
+
+
     # relevant_context = get_relevant_context(query)
     # result = ask_nlp(query, relevant_context)
     # answer = result['answer']
@@ -378,7 +444,7 @@ def chat():
             # answer = gpt2_output[0]['generated_text']
     
     # return jsonify({'results': [answer]})
-    return jsonify({'results': [answer]})
+    # return jsonify({'results': [answer]})
 # results = []  
 # for question in questions:
 #     math_result = handle_math_question(question)
