@@ -21,12 +21,20 @@ The Perfect Home Finder is a data-driven web application designed to help prospe
 
 - **Data Mining**: Collects and processes real estate data, crime statistics, school ratings, and neighborhood quality.
 - **API Integration**: Fetches real-time data on:
-  - Crime rates
+  - Crime rates (with maps)
   - School performance
-  - Housing prices
+  - Neighborhood quality
+  - Housing Information (prices, bathroom, bedroom, history of homes, etc.)
   - Market insights
   - Geography and maps
   - Environmental data
+  - Local Amenitites
+  - Demographics
+  - Environmental Data
+  - Transportation
+  - Legal and Regulatory Information
+  - Real Estate Agents
+
 - **NLP Integration**: Users can ask natural language queries to refine home searches.
 - **Customizable Filters**: Search homes based on location, price range, amenities, and user-defined criteria.
 - **Visualization**: Generates visual insights (charts and graphs) to help users make informed decisions.
@@ -90,11 +98,13 @@ uv venv
 # Activate virtual environment (Windows)
 .\venv\Scripts\activate
 
-# For Mac/Linux
-source venv/bin/activate
 
 # If activation fails on Windows, run the following:
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+
+# For Mac/Linux
+source venv/bin/activate
+
 
 # To deactivate the environment
  deactivate
@@ -112,12 +122,17 @@ uv pip install -r requirements.txt
 
 ### Dependencies
 If `requirements.txt` fails, install libraries individually:
-```bash
-pip install flask
-pip install transformers
-pip install datasets sympy pandas numpy matplotlib
-pip install torch torchvision torchaudio
-pip install tensorflow openllm
+Add these versions to your `requirements.txt`:
+```txt
+datasets==3.2.0
+Flask==3.1.0
+matplotlib==3.10.0
+Requests==2.32.3
+sympy==1.13.1
+torch==2.5.1
+transformers==4.47.0
+numpy==2.2.0
+pandas==2.2.3
 ```
 
 ### Run the Application
@@ -128,6 +143,26 @@ python app.py
 ```
 
 Access the application at: **http://localhost:5000**
+
+---
+### OPENLLM Hello
+```bash
+# Install CUDA
+# Download CUDA toolkit from:
+https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_local
+
+# Verify CUDA installation
+nvcc --version
+
+# Install NVIDIA packages
+pip install nvidia-pyindex
+pip install nvidia-nccl
+
+# Install PyTorch for CUDA
+uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+```
+
+I had the RTX 4070 for these settings.
 
 ---
 
@@ -208,164 +243,6 @@ We welcome contributions to Perfect Home Finder!
 ---
 
 **Perfect Home Finder** © 2024. All Rights Reserved.
-
-
-
-# The Perfect Home Finder
-
-The Perfect Home Finder is a data mining project designed to assist prospective homebuyers in finding their ideal home. By analyzing various factors such as crime rates, neighborhood quality, school ratings, quality of life, and proximity to landfills, this tool provides a comprehensive overview of potential homes based on user preferences. Leveraging APIs and natural language processing (NLP), it aims to deliver tailored and insightful recommendations.
-
-## Upcoming Features
-
-- **Data Mining**: Collect and analyze data on various factors affecting home buying decisions.
-- **API Integration**: Utilize external APIs to gather real-time data on crime rates, school ratings, neighborhood quality, geography, maps, crime map, housing information (price, bathroom, bedroom, etc), history of home if there is any, local amenities, Demographics, enviromental data, transportation, market options, legal and regulatory information, real-estate agent, market insights, integration with morgage calculators.... So far. we will add more.
-- **Natural Language Processing**: Enable users to interact with the system using natural language queries to refine their home search.
-- **Customizable Filters**: Allow users to set specific criteria based on their preferences to receive tailored results.
-- **Visualization**: Provide visual insights into data to help users make informed decisions.
-- **ARIMA/SARIMA/MonteCarlo**: Prediction for housing prices using time series and montecarlo.
-
-## Technologies Used
-
-- **Programming Language**: Python
-- **Libraries**:
-    - `requests` for API calls
-    - `pandas` for data manipulation
-    - `numpy` for numerical analysis
-    - `flask-transformers` for natural language processing
-    - `matplotlib` or `seaborn` for data visualization
-- **APIs**:
-    - Crime data API
-    - School ratings API
-    - Neighborhood quality API
-- **Database**: SQLite or PostgreSQL for storing user preferences and retrieved data
-
-
-
-
-
-
-
-
-
-## How to Run
-
-
-### First create environment through conda:
-1. conda create --name HouseFinder python=3.11.11
-2. conda activate HouseFinder
-3. uv pip install -r requirements.txt
-4. python app.py
-
-To run the Perfect Home Finder application, follow these steps:
-
-### First create environment through venv:
-
-1. **Install Dependencies**:
-    First install uv since it will make pip install much faster for requirements.txt
-    ```sh
-    pip install uv
-    ```
-    Then create a venv through:
-    ```sh
-    uv venv
-    ```
-    Use:
-    ```sh
-    .\venv\Scripts\activate
-    ```
-    You may need to run:
-    ```
-    Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
-    ```
-    In order to authenticate....
-    To activate your virtual env.
-
-    To deactivate:
-    ```sh
-    deactivate
-    ```
-    If by chance you need to delete your venv:
-    - For Windows:
-    ```sh
-    Remove-Item -Recurse -Force .\.venv\
-    ```
-    - For Mac OSX:
-    ```sh
-    python rm -rf .\.venv\
-    ```
-
-
-    Dependencies installed invididually:
-    ```sh
-    pip install flask
-    pip install transformers #May need to enable Long Path for Windows
-    pip install datasets
-    pip install sympy
-    pip install -r https://raw.githubusercontent.com/intro-stat-learning/ISLP_labs/v2/requirements.txt 
-    ```
-    Below are all installation of https://raw.githubusercontent.com/intro-stat-learning/#ISLP_labs/v2/requirements.txt, however if it doesn't work plz try installing individually:
-    Furthermore you will need to download:
-    https://visualstudio.microsoft.com/ja/visual-cpp-build-tools/
-    Then download Build Tools
-
-
-    ```sh
-    pip install pandas
-    pip install ISLP
-    pip install numpy
-    pip install lxml
-    pip install scikit-learn
-    pip install joblib
-    pip install statsmodels
-    pip install lifelines
-    pip install pygam
-    pip install torch
-    pip install pytorch_lightning
-    pip install torchmetrics
-    pip install torchvision
-    pip install matplotlib
-    ```
-    Installing Deep Learning Frameworks::::
-    ```sh
-    pip install torchinfo
-    pip install torch torchvision torchaudio
-    pip install tensorflow
-    pip install openllm
-    ```
-2. **Run the Application**:
-    ```sh
-    python app.py
-    ```
-
-
-### OPENLLM Hello
-```
-Install CUDA 
-https://developer.nvidia.com/cuda-downloads?target_os=Windows&target_arch=x86_64&target_version=11&target_type=exe_local
-```sh
-nvcc --version
-```
-I had the RTX 4070
-```sh
-pip install nvidia-pyindex
-pip install nvidia-nccl
-
-```sh 
-uv pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
-```
-
-
-### Additional Information 
-
-- **Libraries Used**:
-    - `matplotlib` for data visualization
-    - `huggingface` for datasets
-
-- **NLP Testing**:
-    - Use `testnlp.py` for natural language processing testing.
-    - Use `testnlpDialo.py` for Dialo Gpt testing
-- **Development Server**:
-    - Launch the development server using `python app.py`.
 
 
 
