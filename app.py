@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import base64
 import io
 import numpy as np
+import os
 
 
 import pandas as pd
@@ -62,7 +63,34 @@ tokenizer.clean_up_tokenization_spaces = True
 nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
 nlp_gpt2 = pipeline("text-generation", model="gpt2")
 #Get school data
-school_data = load_dataset('mw4/schools')
+
+# Base path relative to the script
+base_path = os.path.join(os.path.dirname(__file__), 'datasets', 'schools')
+
+# Correct file paths
+public_schools = pd.read_csv(os.path.join(base_path, 'Public_Schools.csv'))
+private_schools = pd.read_csv(os.path.join(base_path, 'Private_Schools.csv'))
+# public_schools = pd.read_csv('/datasets/schools/Public_Schools/Public_Schools.csv')
+# private_schools = pd.read_csv('/datasets/schools/Private_Schools/Private_Schools.csv')
+public_schools['Type'] = 'Public'
+private_schools['Type'] = 'Private'
+combined_schools = pd.concat([public_schools, private_schools], ignore_index=True)
+def extract_combined_school_info(df):
+    info = {}
+    for _, row in df.iterrows():
+        location = row['City'].strip().capitalize()  # Assuming 'City' column
+        school_name = row['Name'].strip()  # Assuming 'Name' column
+        school_type = row['Type']  # Public or Private
+
+        # Combine school type and name
+        school_entry = f"{school_name} ({school_type})"
+
+        if location in info:
+            info[location].append(school_entry)
+        else:
+            info[location] = [school_entry]
+    return info
+# school_data = load_dataset('mw4/schools')
 # crime_data = pd.read_csv('./database/datasetsCrime/crime.csv/crime.csv')
 
 
@@ -334,8 +362,8 @@ def extract_school_info(dataset):
 
 # Extract  information
 # crime_info = extract_crime_info(crime_data)
-school_info = extract_school_info(school_data['train'])
-
+# school_info = extract_school_info(school_data['train'])
+school_info = extract_combined_school_info(combined_schools)
 
 
 def get_relevant_context(question):
