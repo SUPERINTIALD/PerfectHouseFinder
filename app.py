@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-	return render_template('index.html')
+	return render_template('home.html')
 
 @app.route('/home')
 def home():
@@ -27,8 +27,8 @@ def home():
 @app.route('/about')
 def about():
     images = [
-        'path/to/riley_mei_image.jpg',
-        'path/to/yuri_fung_image.jpg'
+        './static/img/Yuri.jpg',
+        './static/img/Henry.jpg',
     ]
     return render_template('about.html', images=images)
 
@@ -36,7 +36,9 @@ def about():
 def contact():
     return render_template('contact.html')
 
-
+@app.route('/chat')
+def chatRoom():
+    return render_template('index.html')
 
 # Load the NLP model
     # tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased-distilled-squad')

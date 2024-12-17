@@ -17,13 +17,7 @@
 <body>
     <header id="header" class="header d-flex flex-column justify-content-center">
         <i class="header-toggle d-xl-none bi bi-list"></i>
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                <li><a href="/home"> <i class = "bi bi-house-door"> </i> <span>Home</span></a></li>
-                <li><a href="/about"> <i class = "bi bi-info-circle"> </i> <span>About Us</span></a></li>
-                <li><a href="/contact"> <i class = "bi bi-envelope"> </i> <span>Contact</span></a></li>
-            </ul>
-        </nav>
+        {% include 'nav.html' %}
     </header>
     
     <div class="container">
