@@ -1,5 +1,218 @@
 # The Perfect Home Finder
 
+The Perfect Home Finder is a data-driven web application designed to help prospective homebuyers find their ideal homes. By analyzing diverse factors such as crime rates, school ratings, neighborhood quality, and housing history, it provides tailored and insightful recommendations using advanced technologies like APIs and Natural Language Processing (NLP).
+
+## Table of Contents
+1. [Features](#features)
+2. [Technologies Used](#technologies-used)
+3. [Installation and Setup](#installation-and-setup)
+    - [Setting Up the Environment](#setting-up-the-environment)
+    - [Running the Application](#running-the-application)
+4. [APIs and Data Sources](#apis-and-data-sources)
+5. [Testing](#testing)
+6. [Upcoming Features](#upcoming-features)
+7. [Contributing](#contributing)
+8. [Resources](#resources)
+9. [Credits](#credits)
+
+---
+
+## Features
+
+- **Data Mining**: Collects and processes real estate data, crime statistics, school ratings, and neighborhood quality.
+- **API Integration**: Fetches real-time data on:
+  - Crime rates
+  - School performance
+  - Housing prices
+  - Market insights
+  - Geography and maps
+  - Environmental data
+- **NLP Integration**: Users can ask natural language queries to refine home searches.
+- **Customizable Filters**: Search homes based on location, price range, amenities, and user-defined criteria.
+- **Visualization**: Generates visual insights (charts and graphs) to help users make informed decisions.
+- **Housing Predictions**: Uses ARIMA/SARIMA and Monte Carlo simulations for housing price forecasts.
+- **Interactive Chatbox**: Users can interact with a chatbot for queries about neighborhoods, schools, and properties.
+
+---
+
+## Technologies Used
+
+### **Backend**
+- **Python** (3.11)
+- **Flask** (web server framework)
+- **Transformers** (Hugging Face NLP models)
+- **SymPy** (symbolic computation)
+- **Pandas** and **NumPy** (data manipulation)
+
+### **Frontend**
+- **HTML5**, **CSS3**, and **JavaScript**
+- **Bootstrap** (UI framework)
+- **GLightbox** (lightbox for images)
+
+### **Data and Visualization**
+- **Matplotlib** for charts and graphs
+- **Statsmodels** for predictive modeling
+
+### **APIs**
+- Crime Data API
+- School Ratings API
+- Google Maps API
+
+### **Database**
+- SQLite or PostgreSQL
+
+---
+
+## Installation and Setup
+
+Follow these steps to set up and run the project.
+
+### Setting Up the Environment
+
+#### **Using Conda**
+```bash
+# Create and activate environment
+conda create --name HouseFinder python=3.11.11
+conda activate HouseFinder
+
+# Install dependencies
+uv pip install -r requirements.txt
+```
+
+#### **Using Virtual Environment (venv)**
+```bash
+# Install uv for faster installation
+pip install uv
+
+# Create virtual environment
+uv venv
+
+# Activate virtual environment (Windows)
+.\venv\Scripts\activate
+
+# For Mac/Linux
+source venv/bin/activate
+
+# If activation fails on Windows, run the following:
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+
+# To deactivate the environment
+ deactivate
+
+# If you need to delete the virtual environment:
+# Windows
+Remove-Item -Recurse -Force .\.venv\
+
+# Mac/Linux
+rm -rf .\.venv\
+
+# Install dependencies
+uv pip install -r requirements.txt
+```
+
+### Dependencies
+If `requirements.txt` fails, install libraries individually:
+```bash
+pip install flask
+pip install transformers
+pip install datasets sympy pandas numpy matplotlib
+pip install torch torchvision torchaudio
+pip install tensorflow openllm
+```
+
+### Run the Application
+
+```bash
+# Run the Flask app
+python app.py
+```
+
+Access the application at: **http://localhost:5000**
+
+---
+
+## APIs and Data Sources
+
+### **APIs**
+1. Crime Data API
+2. School Ratings API
+3. Google Maps API
+4. Zillow Housing Data API
+
+### **Data Sources**
+- **Crime Data**: [Kaggle Crime Dataset](https://www.kaggle.com/datasets/taruntiwarihp/crime-world)
+- **School Data**: [US Schools Dataset](https://www.kaggle.com/datasets/andrewmvd/us-schools-dataset)
+- **Housing Data**: [Zillow Housing Price Data](https://www.kaggle.com/datasets/paultimothymooney/zillow-house-price-data)
+
+---
+
+## Testing
+
+### **NLP Testing**
+- Use `testnlp.py` to verify NLP model accuracy.
+- Use `testnlpDialo.py` for DialogGPT chatbot testing.
+
+### **Run Chat**
+```bash
+python app.py
+```
+Use the interactive chatbox on the front-end to ask questions.
+
+---
+
+## Upcoming Features
+
+- **AI Predictive Analytics**: Enhancing housing price predictions with machine learning models.
+- **Mortgage Calculators**: Integrating financial tools for affordability analysis.
+- **Enhanced Visualization**: Real-time maps, charts, and graphs for property data.
+- **Expanded APIs**: Integration with real estate platforms like Zillow, Realtor.com.
+
+---
+
+## Contributing
+
+We welcome contributions to Perfect Home Finder!
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/your-feature`.
+3. Commit your changes: `git commit -m "Add new feature"`.
+4. Push the branch: `git push origin feature/your-feature`.
+5. Submit a pull request.
+
+---
+
+## Resources
+
+### **Kaggle Datasets**
+- [Denver Crime Data](https://www.kaggle.com/datasets/paultimothymooney/denver-crime-data)
+- [US Schools Dataset](https://www.kaggle.com/datasets/andrewmvd/us-schools-dataset)
+
+### **APIs and Tools**
+- [Google Maps API](https://developers.google.com/maps/)
+- [Zillow Housing API](https://www.zillow.com/research/data/)
+- [Hugging Face Transformers](https://huggingface.co/docs/transformers/en/index)
+- [OpenLLM](https://pypi.org/project/openllm/)
+
+---
+
+## Credits
+
+**Developers**:
+- **Yuri Fung**: Full-Stack Developer, API Integration, NLP, and LLMs [LinkedIn](https://www.linkedin.com/in/yuri-m-fung/)
+- **Henry Miller**: Data Analysis, Dataset Management [LinkedIn](https://www.linkedin.com/in/henrymmiller/)
+
+**Special Thanks**:
+- [HuggingFace](https://huggingface.co)
+- [Kaggle Community](https://www.kaggle.com)
+- [Google Maps API](https://developers.google.com/maps/)
+
+---
+
+**Perfect Home Finder** © 2024. All Rights Reserved.
+
+
+
+# The Perfect Home Finder
+
 The Perfect Home Finder is a data mining project designed to assist prospective homebuyers in finding their ideal home. By analyzing various factors such as crime rates, neighborhood quality, school ratings, quality of life, and proximity to landfills, this tool provides a comprehensive overview of potential homes based on user preferences. Leveraging APIs and natural language processing (NLP), it aims to deliver tailored and insightful recommendations.
 
 ## Upcoming Features
