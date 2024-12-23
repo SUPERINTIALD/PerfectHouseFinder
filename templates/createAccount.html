@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block main %}
+<main>
+    <form action="/create_account" method="POST">
+        <input name="image_id" type="hidden" value="{{ image_file }}">
+        <label class="label">Username</label>
+        <input name="username" type="text" placeholder="Username">
+        <label class="label">Password</label>
+        <input name="password" type="password" placeholder="Password">
+        <input type="submit" class="button is-danger" value="Create Account"></input>
+        Already have an account? <a href="/login">Log in</a>
+    </form>
+</main>
+{% endblock %}

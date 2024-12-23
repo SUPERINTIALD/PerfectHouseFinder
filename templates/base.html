@@ -8,34 +8,9 @@
 </head>
 
 <body>
-    <header class="container">
-        <nav>
-            <ul class="nav-left">
-                <li>
-                    <h1><a href="/">PHF</a></h1>
-                </li>
-            </ul>
-            <ul class="nav-right">
-                {% if username %}
-                <li>
-                    <a href="/logout">
-                        <button>Log out</button>
-                    </a>
-                </li>
-                {% else %}
-                <li>
-                    <a href="/login">
-                        <button>Log in</button>
-                    </a>
-                </li>
-                <li>
-                    <a href="/register">
-                        <button>Register</button>
-                    </a>
-                </li>
-                {% endif %}
-            </ul>
-        </nav>
+    <header id="header" class="header d-flex flex-column justify-content-center">
+        <i class="header-toggle d-xl-none bi bi-list"></i>
+        {% include 'nav.html' %}
     </header>
 
     <main class="container">

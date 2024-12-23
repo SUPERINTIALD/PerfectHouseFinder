@@ -11,16 +11,31 @@ import io
 import numpy as np
 import os
 import pandas as pd
+
+# Handle the schools information
 from appFunc import (
     extract_combined_school_info,
 )
+
+# Handle Math problems
 from handleMathQuestions import handle_math_question
+
+# Handle Context 
+from context import general_info
+
+# Handle House Prices
+from HandleHousePrice import (
+    load_and_merge_housing_data,
+    # filter_houses_by_price,
+    process_price_query
+)
+
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-	return render_template('home.html')
+	return render_template('login.html')
 
 @app.route('/home')
 def home():
@@ -68,8 +83,8 @@ public_schools = pd.read_csv('./datasets/schools/Public_Schools/Public_Schools.c
 private_schools = pd.read_csv('./datasets/schools/Private_Schools/Private_Schools.csv')
 public_schools['Type'] = 'Public'
 private_schools['Type'] = 'Private'
-print("Public Schools Columns:", public_schools.columns)
-print("Private Schools Columns:", private_schools.columns)
+# print("Public Schools Columns:", public_schools.columns)
+# print("Private Schools Columns:", private_schools.columns)
 
 combined_schools = pd.concat([public_schools, private_schools], ignore_index=True)
 
@@ -87,32 +102,6 @@ combined_schools = pd.concat([public_schools, private_schools], ignore_index=Tru
 plt.switch_backend('Agg')
 
 
-
-
-#General Info about our company
-general_info = """
-    Perfect Home Finder helps you find the best homes available in various regions. 
-    We provide expert advice and a wide range of properties to choose from, including urban, suburban, and rural areas. 
-    Our services include property valuation, neighborhood analysis, and personalized home recommendations. 
-    We cover a broad spectrum of home prices, from affordable starter homes to luxurious estates. 
-    In addition to property details, we offer insights into local amenities such as schools, parks, and shopping centers. 
-    We also provide information on crime rates, ensuring you can find a safe and secure neighborhood. 
-    For example, cities like Denver have diverse climates with cold winters and hot summers, and are known for their safety and vibrant communities. 
-    Our goal is to help you find the perfect home that meets all your needs and preferences.
-    Perfect Home Finder is your ultimate resource for discovering the best homes available across various regions. We specialize in assisting homebuyers with tailored advice and a comprehensive selection of properties, ensuring you find the perfect fit for your lifestyle and budget.
-    Our team of real estate experts provides in-depth property valuation services, helping you understand the true worth of a home based on market trends and neighborhood dynamics. We also conduct thorough neighborhood analyses, giving you insights into the quality of life, safety, and community features in the areas you are considering.
-    We cater to a broad spectrum of home prices, ranging from affordable starter homes ideal for first-time buyers to luxurious estates equipped with high-end amenities. No matter your financial situation, we strive to present options that align with your needs and preferences.
-    In addition to helping you find the right home, we offer valuable insights into local amenities. Our database includes information on schools—both K-12 and colleges—allowing you to assess the educational opportunities available in the vicinity. We provide ratings and reviews for schools, so you can make informed decisions based on quality of education, extracurricular activities, and overall student performance.
-    Moreover, we understand the importance of community features, so we include details about nearby parks, recreational areas, and shopping centers. Whether you're looking for family-friendly activities, outdoor spaces for leisure, or convenient access to retail options, we have you covered.
-    Safety is a top priority when selecting a neighborhood, and we equip you with comprehensive information on crime rates in different areas. By analyzing local crime statistics, we help you make informed choices about the safety of your potential new home, allowing you to prioritize peace of mind.
-    For instance, cities like Denver are renowned for their diverse climates, which include cold winters and warm summers. They are also celebrated for their vibrant communities and overall safety, making them desirable locations for families and individuals alike. Whether you prefer urban settings with bustling nightlife or quiet suburban environments, we assist you in navigating your options.
-    Our mission at Perfect Home Finder is to facilitate a seamless home-buying experience. We pride ourselves on our customer-centric approach, ensuring that every interaction is tailored to your specific needs. From your initial inquiry to the final closing process, we are dedicated to providing support and guidance every step of the way.
-    We pride ourselves on our extensive database of properties, which is regularly updated to reflect the latest market trends and availability. Our user-friendly platform allows you to filter properties based on various criteria such as price range, number of bedrooms, property type, and more. This ensures that you can quickly find homes that match your specific requirements.
-    Our team is committed to providing exceptional customer service. We offer personalized consultations to understand your unique needs and preferences, guiding you through every step of the home-buying process. From initial property searches to final negotiations, we are here to support you.
-    In addition to our property listings, we provide valuable resources such as mortgage calculators, home-buying guides, and market analysis reports. These tools are designed to empower you with the knowledge needed to make informed decisions.
-    At Perfect Home Finder, we believe that finding your dream home should be an enjoyable and stress-free experience. Our mission is to simplify the process and help you discover a place you can truly call home.
-    
-    """ 
 
 # def extract_crime_info(df):
 #     info = {}
@@ -233,7 +222,33 @@ def ask_nlp(question, context):
 
 
 
-#Updated Chat system using NER
+# #Updated Chat system using NER
+# @app.route('/chat', methods=['POST'])
+# def chat():
+#     data = request.get_json()
+#     query = data['query']
+
+#     # Extract location and topic
+#     location, topic = extract_location_and_topic(query)
+
+#     # Check if the question is a math question
+#     math_result = handle_math_question(query)
+#     if math_result is not None:
+#         answer = str(math_result)
+#     elif topic == "schools" and location:
+#         if location in school_info:
+#             answer = format_list_response(school_info[location], header=f"Schools in {location}:")
+#         else:
+#             answer = "No schools found in this location."
+#     else:
+#         relevant_context = get_relevant_context(query)
+#         result = ask_nlp(query, relevant_context)
+#         answer = result['answer']
+
+#     return jsonify({'results': [answer]})
+
+
+# Updated Chat system with House Price integration
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.get_json()
@@ -246,19 +261,31 @@ def chat():
     math_result = handle_math_question(query)
     if math_result is not None:
         answer = str(math_result)
+
+    # Check if the query is about house prices
+    elif "$" in query or "price" in query.lower():
+        # Load house price data (optimize this step by preloading if needed)
+        bottom_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Bottom_tier_time_series.csv"
+        top_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Top_tier_time_series.csv"
+        merged_data = load_and_merge_housing_data(bottom_tier_path, top_tier_path)
+
+        # Process house price query
+        answer = process_price_query(query, merged_data)
+
+    # Handle school-related queries
     elif topic == "schools" and location:
         if location in school_info:
             answer = format_list_response(school_info[location], header=f"Schools in {location}:")
         else:
             answer = "No schools found in this location."
+
+    # Default NLP processing for other questions
     else:
         relevant_context = get_relevant_context(query)
         result = ask_nlp(query, relevant_context)
         answer = result['answer']
 
     return jsonify({'results': [answer]})
-
-
     # relevant_context = get_relevant_context(query)
     # result = ask_nlp(query, relevant_context)
     # answer = result['answer']
