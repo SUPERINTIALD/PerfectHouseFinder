@@ -18,7 +18,7 @@
         {% include 'nav.html' %}
     </header>
     <main>
-        <section>
+        <section style="margin-bottom: 10px;">
             <h2>Find Your Dream Home</h2>
             <p>Your journey to find the perfect home starts here.</p>
             <a href="./home"> <i class = "bi bi-house-door"> </i> <span>Find a Home</span></a>
@@ -32,18 +32,35 @@
             </ul>
         </section>
 
-
-
-        <div id="chatbox" class="chatbox"></div>
+        
+        <section style="margin-bottom: 10px;">
+            <h2>Chatbot</h2>
+            <p>Ask us anything!</p>
+            <div id="chatbox" class="chatbox"></div>
             <!-- Messages will appear here -->
-        </div>
-        <form id="chatForm">
-            <div class="form-group">
-                <label for="message">Message:</label>
-                <input type="text" id="message" name="message" class="form-control" required>
             </div>
-            <button type="submit" class="btn btn-primary">Send</button>
-        </form>
+            <form id="chatForm">
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <input type="text" id="message" name="message" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+
+        </section>
+        <section style="margin-bottom: 10px;">
+            <div>
+                <h2>Asking example questions:</h2>
+                <ul>
+
+                    <li><strong>Predictions:</strong> Forecast prices in Denver for the next 120 months using SARIMA with p=2, d=1, q=1 and seasonal(12) and run 500 Monte Carlo simulations.</li>
+                    <li><strong>Trends: </strong> Show me some price trends around Denver</li>
+                    <li><strong>Schools: </strong> What are some schools near Denver?</li>
+                    <li><strong>Maths:</strong>  plot x**2</li>
+
+                </ul>
+            </div>
+        </section>
     </main>
     <script src="../static/js/chat.js"></script>
 

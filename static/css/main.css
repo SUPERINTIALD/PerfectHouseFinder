@@ -525,13 +525,27 @@ footer p {
   /*--------------------------------------------------------------
   # Global Sections
   --------------------------------------------------------------*/
-  section,
+  /* section,
   .section {
+    
     color: var(--default-color);
     background-color: var(--background-color);
-    padding: 60px 0;
-    overflow: clip;
-  }
+    padding: 2px 0;
+    overflow: auto;
+  } */
+
+section,
+.section {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  padding: 20px 40px; /* Increased padding for better spacing */
+  margin: 20px auto; /* Center the sections horizontally */
+  /* max-width: 100%; Set a maximum width for the sections */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for better visual separation */
+  border-radius: 8px; /* Optional: Add rounded corners */
+  /* text-align: center; Optional: Center the text within the sections */
+  overflow: hidden; /* Ensure content doesn't overflow */
+}
   
   /*--------------------------------------------------------------
   # Global Section Titles
