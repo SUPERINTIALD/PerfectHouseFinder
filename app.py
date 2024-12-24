@@ -11,7 +11,7 @@ import io
 import numpy as np
 import os
 import pandas as pd
-
+import threading
 # Handle the schools information
 from appFunc import (
     extract_combined_school_info,
@@ -37,7 +37,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-	return render_template('login.html')
+	return render_template('index.html')
 
 @app.route('/home')
 def home():
@@ -409,57 +409,64 @@ def ask_nlp(question, context):
 
 
 
+query_lock = threading.Lock()
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    data = request.get_json()
-    query = data['query']
+    with query_lock:
+        try:
+            data = request.get_json()
+            query = data['query']
 
-    # Extract location and topic
-    location, topic = extract_location_and_topic(query)
+            # Extract location and topic
+            location, topic = extract_location_and_topic(query)
 
-    # Check if the question is a math question
-    math_result = handle_math_question(query)
-    if math_result is not None:
-        answer = str(math_result)
+            # Check if the question is a math question
+            math_result = handle_math_question(query)
+            if math_result is not None:
+                answer = str(math_result)
 
-    # Check if the query is about house prices or predictions
-    elif "$" in query or "price" in query.lower() or "forecast" in query.lower():
-        # Load house price data
-        bottom_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Bottom_tier_time_series.csv"
-        top_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Top_tier_time_series.csv"
+            # Check if the query is about house prices or predictions
+            elif "$" in query or "price" in query.lower() or "forecast" in query.lower():
+                # Load house price data
+                bottom_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Bottom_tier_time_series.csv"
+                top_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Top_tier_time_series.csv"
 
-        # Merge data into a single dataset
-        merged_data = load_and_merge_data(bottom_tier_path, top_tier_path)
+                # Merge data into a single dataset
+                merged_data = load_and_merge_data(bottom_tier_path, top_tier_path)
 
-        # Process forecasting queries
-        if "forecast" in query.lower():
-            try:
-                # Call process_forecast_query directly
-                answer, plot_image = process_forecast_query(query, merged_data, location)
-                response = f"{answer}<br><img src='data:image/png;base64,{plot_image}'/>"
-                return jsonify({'results': [response]})
-            except Exception as e:
-                answer = f"Error processing forecast query: {str(e)}"
+                # Process forecasting queries
+                if "forecast" in query.lower():
+                    try:
+                        # Call process_forecast_query directly
+                        answer, plot_image = process_forecast_query(query, merged_data, location)
+                        response = f"{answer}<br><img src='data:image/png;base64,{plot_image}'/>"
+                        return jsonify({'results': [response]})
+                    except Exception as e:
+                        answer = f"Error processing forecast query: {str(e)}"
 
-        # Handle price-related queries
-        else:
-            answer = process_price_query(query, merged_data)
+                # Handle price-related queries
+                else:
+                    answer = process_price_query(query, merged_data)
 
-    # Handle school-related queries
-    elif topic == "schools" and location:
-        if location in school_info:
-            answer = format_list_response(school_info[location], header=f"Schools in {location}:")
-        else:
-            answer = "No schools found in this location."
+            # Handle school-related queries
+            elif topic == "schools" and location:
+                if location in school_info:
+                    answer = format_list_response(school_info[location], header=f"Schools in {location}:")
+                else:
+                    answer = "No schools found in this location."
 
-    # Default NLP processing for other questions
-    else:
-        relevant_context = get_relevant_context(query)
-        result = ask_nlp(query, relevant_context)
-        answer = result['answer']
+            # Default NLP processing for other questions
+            else:
+                relevant_context = get_relevant_context(query)
+                result = ask_nlp(query, relevant_context)
+                answer = result['answer']
 
-    return jsonify({'results': [answer]})
+            return jsonify({'results': [answer]})
+            
+        except Exception as e:
+            # Return an error if anything fails
+            return jsonify({'results': [f"Error processing query: {str(e)}"]})
 
 
 
