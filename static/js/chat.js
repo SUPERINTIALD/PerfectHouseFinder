@@ -75,7 +75,14 @@
 //     });
 // });
 
+function scrollToBottom() {
+    const chatbox = document.getElementById('chatbox');
 
+    // Ensure DOM has rendered the new content
+    setTimeout(() => {
+        chatbox.scrollTop = chatbox.scrollHeight; // Scrolls to the bottom
+    }, 50); // Small delay ensures browser renders updates
+}
 
 
 document.getElementById('chatForm').addEventListener('submit', function(event) {
@@ -111,9 +118,48 @@ document.getElementById('chatForm').addEventListener('submit', function(event) {
         chatbox.appendChild(nlpResponse);
         
         // Scroll to the bottom of the chatbox
-        chatbox.scrollTop = chatbox.scrollHeight;
+        // chatbox.scrollTop = chatbox.scrollHeight + 10;
+        scrollToBottom();
+
     })
     .catch(error => {
         console.error('Error:', error);
     });
+    // const chatboxC = document.querySelector('.chatbox-container');
+    // const header = document.getElementById('chatbox-header');
+    
+    // let isDragging = false;
+    // let offsetX = 0;
+    // let offsetY = 0;
+    
+    // // Enable dragging
+    // header.addEventListener('mousedown', (e) => {
+    //     isDragging = true;
+    //     offsetX = e.clientX - chatboxC.getBoundingClientRect().left;
+    //     offsetY = e.clientY - chatboxC.getBoundingClientRect().top;
+    
+    //     chatboxC.style.cursor = 'grabbing';
+    //     document.addEventListener('mousemove', onMouseMove);
+    //     document.addEventListener('mouseup', onMouseUp);
+    // });
+    
+    // function onMouseMove(e) {
+    //     if (isDragging) {
+    //         chatboxC.style.left = `${e.clientX - offsetX}px`;
+    //         chatboxC.style.top = `${e.clientY - offsetY}px`;
+    //     }
+    // }
+    
+    // function onMouseUp() {
+    //     isDragging = false;
+    //     chatboxC.style.cursor = 'move';
+    //     document.removeEventListener('mousemove', onMouseMove);
+    //     document.removeEventListener('mouseup', onMouseUp);
+    // }
+    // window.addEventListener('resize', () => {
+    //     const chatbox = document.querySelector('.chatbox-container');
+    //     chatbox.style.maxWidth = `${window.innerWidth}px`;
+    //     chatbox.style.maxHeight = `${window.innerHeight}px`;
+    // });
+    
 });

@@ -29,6 +29,8 @@ from HandleHousePrice import (
     # filter_houses_by_price,
     process_price_query
 )
+# from HandleHousePrediction import load_and_merge_data, forecast_with_monte_carlo, generate_forecast_plot
+from HandleHousePrediction import load_and_merge_data, process_forecast_query
 
 app = Flask(__name__)
 
@@ -248,7 +250,166 @@ def ask_nlp(question, context):
 #     return jsonify({'results': [answer]})
 
 
-# Updated Chat system with House Price integration
+# @app.route('/chat', methods=['POST'])
+# def chat():
+#     data = request.get_json()
+#     query = data['query']
+
+#     # Extract location and topic
+#     location, topic = extract_location_and_topic(query)
+
+#     # Check if the question is a math question
+#     math_result = handle_math_question(query)
+#     if math_result is not None:
+#         answer = str(math_result)
+
+#     # Check if the query is about house prices or predictions
+#     elif "$" in query or "price" in query.lower() or "forecast" in query.lower():
+#         # Load house price data
+#         bottom_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Bottom_tier_time_series.csv"
+#         top_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Top_tier_time_series.csv"
+
+#         # Merge data into a single dataset
+#         merged_data = load_and_merge_data(bottom_tier_path, top_tier_path)
+
+#         # Process forecasting queries
+#         if "forecast" in query.lower():
+#             try:
+#                 # Filter location-specific data
+#                 location_data = merged_data[merged_data['RegionName'].str.contains(location, case=False)]
+#                 if location_data.empty:
+#                     answer = f"No data available for {location}."
+#                 else:
+#                     # Prepare time-series data
+#                     date_columns = [col for col in map(str, location_data.columns) if re.match(r'\d{4}-\d{2}-\d{2}', col)]
+#                     data = location_data[date_columns].iloc[0]
+#                     data.index = pd.to_datetime([col.split('_')[0] for col in data.index])
+
+#                     # Fill missing values
+#                     data = data.interpolate(method='linear').fillna(method='ffill')
+
+#                     # Forecast using ARIMA/SARIMA with Monte Carlo simulation
+#                     mean_forecast, _ = forecast_with_monte_carlo(
+#                         data, query, start_date=data.index[0]
+#                     )
+#                     answer = f"Forecast for {location}: {mean_forecast[-1]:.2f}"
+#             except Exception as e:
+#                 answer = f"Error processing forecast query: {str(e)}"
+#         # Handle price-related queries
+#         else:
+#             answer = process_price_query(query, merged_data)
+
+#     # Handle school-related queries
+#     elif topic == "schools" and location:
+#         if location in school_info:
+#             answer = format_list_response(school_info[location], header=f"Schools in {location}:")
+#         else:
+#             answer = "No schools found in this location."
+
+#     # Default NLP processing for other questions
+#     else:
+#         relevant_context = get_relevant_context(query)
+#         result = ask_nlp(query, relevant_context)
+#         answer = result['answer']
+
+#     return jsonify({'results': [answer]})
+
+
+
+
+
+
+# @app.route('/chat', methods=['POST'])
+# def chat():
+#     data = request.get_json()
+#     query = data['query']
+
+#     # Extract location and topic
+#     location, topic = extract_location_and_topic(query)
+
+#     # Check if the question is a math question
+#     math_result = handle_math_question(query)
+#     if math_result is not None:
+#         answer = str(math_result)
+
+#     # Check if the query is about house prices or predictions
+#     elif "$" in query or "price" in query.lower() or "forecast" in query.lower():
+#         # Load house price data
+#         bottom_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Bottom_tier_time_series.csv"
+#         top_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Top_tier_time_series.csv"
+
+#         # Merge data into a single dataset
+#         merged_data = load_and_merge_data(bottom_tier_path, top_tier_path)
+
+#         # Process forecasting queries
+#         if "forecast" in query.lower():
+#             try:
+#                 # Filter location-specific data
+#                 location_data = merged_data[merged_data['RegionName'].str.contains(location, case=False)]
+#                 if location_data.empty:
+#                     answer = f"No data available for {location}."
+#                 else:
+#                     # Prepare time-series data
+#                     date_columns = [col for col in map(str, location_data.columns) if re.match(r'\d{4}-\d{2}-\d{2}', col)]
+#                     data = location_data[date_columns].iloc[0]
+#                     data.index = pd.to_datetime([col.split('_')[0] for col in data.index])
+
+#                     # Fill missing values
+#                     data = data.interpolate(method='linear').ffill()
+
+#                     # Forecast using ARIMA/SARIMA with Monte Carlo simulation
+#                     mean_forecast, simulated_paths = forecast_with_monte_carlo(
+#                         data, query, start_date=data.index[0]
+#                     )
+
+#                     # Generate and encode plot
+#                     forecast_dates = pd.date_range(
+#                         start=data.index[-1] + pd.DateOffset(months=1),
+#                         periods=len(mean_forecast), freq='ME'
+#                     )
+
+#                     plot_image = generate_forecast_plot(
+#                         data, mean_forecast, simulated_paths, forecast_dates, location, "SARIMA"
+#                     )
+
+#                     # Return forecast and plot
+#                     answer = f"Forecast for {location}: {mean_forecast.iloc[-1]:.2f}"
+#                     return jsonify({'results': [answer], 'plot': f"data:image/png;base64,{plot_image}"})
+#             except Exception as e:
+#                 answer = f"Error processing forecast query: {str(e)}"
+#         # Handle price-related queries
+#         else:
+#             answer = process_price_query(query, merged_data)
+
+#     # Handle school-related queries
+#     elif topic == "schools" and location:
+#         if location in school_info:
+#             answer = format_list_response(school_info[location], header=f"Schools in {location}:")
+#         else:
+#             answer = "No schools found in this location."
+
+#     # Default NLP processing for other questions
+#     else:
+#         relevant_context = get_relevant_context(query)
+#         result = ask_nlp(query, relevant_context)
+#         answer = result['answer']
+
+#     return jsonify({'results': [answer]})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @app.route('/chat', methods=['POST'])
 def chat():
     data = request.get_json()
@@ -262,15 +423,28 @@ def chat():
     if math_result is not None:
         answer = str(math_result)
 
-    # Check if the query is about house prices
-    elif "$" in query or "price" in query.lower():
-        # Load house price data (optimize this step by preloading if needed)
+    # Check if the query is about house prices or predictions
+    elif "$" in query or "price" in query.lower() or "forecast" in query.lower():
+        # Load house price data
         bottom_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Bottom_tier_time_series.csv"
         top_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Top_tier_time_series.csv"
-        merged_data = load_and_merge_housing_data(bottom_tier_path, top_tier_path)
 
-        # Process house price query
-        answer = process_price_query(query, merged_data)
+        # Merge data into a single dataset
+        merged_data = load_and_merge_data(bottom_tier_path, top_tier_path)
+
+        # Process forecasting queries
+        if "forecast" in query.lower():
+            try:
+                # Call process_forecast_query directly
+                answer, plot_image = process_forecast_query(query, merged_data, location)
+                response = f"{answer}<br><img src='data:image/png;base64,{plot_image}'/>"
+                return jsonify({'results': [response]})
+            except Exception as e:
+                answer = f"Error processing forecast query: {str(e)}"
+
+        # Handle price-related queries
+        else:
+            answer = process_price_query(query, merged_data)
 
     # Handle school-related queries
     elif topic == "schools" and location:
@@ -286,6 +460,66 @@ def chat():
         answer = result['answer']
 
     return jsonify({'results': [answer]})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Updated Chat system with House Price integration
+# @app.route('/chat', methods=['POST'])
+# def chat():
+#     data = request.get_json()
+#     query = data['query']
+
+#     # Extract location and topic
+#     location, topic = extract_location_and_topic(query)
+
+#     # Check if the question is a math question
+#     math_result = handle_math_question(query)
+#     if math_result is not None:
+#         answer = str(math_result)
+
+#     # Check if the query is about house prices
+#     elif "$" in query or "price" in query.lower():
+#         # Load house price data (optimize this step by preloading if needed)
+#         bottom_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Bottom_tier_time_series.csv"
+#         top_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Top_tier_time_series.csv"
+#         merged_data = load_and_merge_housing_data(bottom_tier_path, top_tier_path)
+
+#         # Process house price query
+#         answer = process_price_query(query, merged_data)
+
+#     # Handle school-related queries
+#     elif topic == "schools" and location:
+#         if location in school_info:
+#             answer = format_list_response(school_info[location], header=f"Schools in {location}:")
+#         else:
+#             answer = "No schools found in this location."
+
+#     # Default NLP processing for other questions
+#     else:
+#         relevant_context = get_relevant_context(query)
+#         result = ask_nlp(query, relevant_context)
+#         answer = result['answer']
+
+#     return jsonify({'results': [answer]})
     # relevant_context = get_relevant_context(query)
     # result = ask_nlp(query, relevant_context)
     # answer = result['answer']

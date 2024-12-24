@@ -11,10 +11,27 @@ model = AutoModelForQuestionAnswering.from_pretrained('deepset/roberta-base-squa
 nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
 
 # Load and merge ZHVI datasets
+# def load_and_merge_housing_data(bottom_path, top_path):
+#     bottom_data = pd.read_csv(bottom_path)
+#     top_data = pd.read_csv(top_path)
+
+#     merge_columns = ['RegionID', 'RegionName', 'StateName', 'Metro', 'CountyName', 'RegionType']
+#     merged_data = pd.merge(
+#         bottom_data,
+#         top_data,
+#         on=merge_columns,
+#         suffixes=('_bottom', '_top'),
+#         how='outer'
+#     )
+
+#     return merged_data.copy()  # Ensures a new memory allocation for improved performance
+
 def load_and_merge_housing_data(bottom_path, top_path):
+    # Load datasets
     bottom_data = pd.read_csv(bottom_path)
     top_data = pd.read_csv(top_path)
 
+    # Merge datasets on specified columns
     merge_columns = ['RegionID', 'RegionName', 'StateName', 'Metro', 'CountyName', 'RegionType']
     merged_data = pd.merge(
         bottom_data,
@@ -24,7 +41,21 @@ def load_and_merge_housing_data(bottom_path, top_path):
         how='outer'
     )
 
-    return merged_data.copy()  # Ensures a new memory allocation for improved performance
+    # Combine date columns by averaging
+    date_columns_bottom = [col for col in merged_data.columns if '_bottom' in col]
+    date_columns_top = [col.replace('_bottom', '_top') for col in date_columns_bottom]
+
+    for b_col, t_col in zip(date_columns_bottom, date_columns_top):
+        merged_data[b_col] = pd.to_numeric(merged_data[b_col], errors='coerce')
+        merged_data[t_col] = pd.to_numeric(merged_data[t_col], errors='coerce')
+        merged_data[b_col] = merged_data[[b_col, t_col]].mean(axis=1)
+        merged_data.rename(columns={b_col: b_col.replace('_bottom', '')}, inplace=True)
+
+    # Drop 'top' columns
+    merged_data.drop(columns=date_columns_top, inplace=True)
+
+    return merged_data
+
 
 # Categorize homes by price
 def categorize_price(price):
@@ -106,7 +137,7 @@ def process_price_query(query, merged_data):
     elif region:
         chart = generate_price_trend_chart(merged_data, region)
         if chart:
-            response = f"Here is the price trend in {region}."
+            response = f"Here is the price trend in {region}.\n"
             response += f'<img src="data:image/png;base64,{chart}"/>'
         else:
             response = f"No data found for {region}."

@@ -131,7 +131,7 @@ footer p {
     border: 1px solid #ccc;
     padding: 10px;
     margin-top: 20px;
-    max-height: 400px;
+    max-height: 800px;
     overflow-y: auto;
 }
 .user-message, .chatbot-message {
@@ -156,7 +156,7 @@ footer p {
 
 
 
-
+/* Resize Chatbox: */
 
 
 
