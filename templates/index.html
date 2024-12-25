@@ -1,70 +1,174 @@
 <!DOCTYPE html>
-
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Perfect Home Finder</title>
-        <link href="../static/vendors/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- <link href="../static/vendors/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Home Finder</title>
+    <link href="../static/vendors/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="../static/vendors/node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet"> -->
+    <!-- <link href="../static/vendors/node_modules/aos/dist/aos.css" rel="stylesheet"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
 
-        <link href="../static/vendors/node_modules/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
-        <link href="../static/css/main.css" rel="stylesheet">
-    </head>
+    <link href="../static/vendors/node_modules/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
+    <!-- <link href="../static/vendors/node_modules/swiper/swiper-bundle.min.css" rel="stylesheet"> -->
+    <link href="../static/css/main.css" rel="stylesheet">
+
+</head>
 <body>
     <header id="header" class="header d-flex flex-column justify-content-center">
         <i class="header-toggle d-xl-none bi bi-list"></i>
         {% include 'nav.html' %}
     </header>
     <main>
-        <section style="margin-bottom: 10px;">
-            <h2>Find Your Dream Home</h2>
-            <p>Your journey to find the perfect home starts here.</p>
-            <a href="./home"> <i class = "bi bi-house-door"> </i> <span>Find a Home</span></a>
+        <section id="hero"class="hero section text-center d-flex align-items-center justify-content-center" 
+         style="background-image: url('../static/img/houseBanner.png'); 
+                background-size: cover; 
+                background-position: center; 
+                background-repeat: no-repeat; 
+                height: 60vh; 
+                color: white; 
+                position: relative;">
+
+            <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.2);"></div>
+
+            <!-- <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.5);"></div> -->
+            <div class="container position-relative">
+                <h1 class="display-3 fw-bold">Perfect Home Finder</h1>
+                <h4 class="fw-bold">Your journey to your home starts here.</h4>
+                <div class="social-links">
+                    <a href="https://x.com/yur1chantan" target="_blank"><i class="bi bi-twitter-x"></i></a>
+                    <a href="https://www.facebook.com/yur1chantan" target = "_blank"><i class="bi bi-facebook" target="_blank"></i></a>
+                    <a href="https://github.com/SUPERINTIALD" target="_blank"><i class="bi bi-github"></i></a>
+                    <a href="https://www.linkedin.com/in/yuri-m-fung/"target="_blank"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://www.instagram.com/yurichantan/" target="_blank"><i class="bi bi-instagram"></i></a>
+                  </div>
+                <a href="#search" class="btn btn-dark btn-lg mt-3">Start Your Search</a>
+            </div>
+
         </section>
-        <section>
-            <h2>Why Choose Us?</h2>
-            <ul>
-                <li>Wide range of properties</li>
-                <li>Expert advice</li>
-                <li>Trusted by thousands</li>
-            </ul>
+        <section id="search" class="py-3">
+            <div class="container">
+                <h2 class="text-center mb-4">Find Your Dream Home</h2>
+                <form action="/search" method="GET" class="row g-3 justify-content-center">
+                    <div class="col-md-8">
+                        <input type="text" id="search" name="search" class="form-control" placeholder="e.g., 3 bedrooms, good schools, low crime rate">
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-primary w-100">Search</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="py-5 bg-light">
+            <div class="container text-center">
+                <h2 class="mb-3">Why Choose Us?</h2>
+                <div class="d-flex justify-content-center flex-wrap">
+                    <div class="p-3">
+                        <i class="bi bi-house-door display-5 mb-3"></i>
+                        <h4>Wide Range of Properties</h4>
+                        <p>Explore a diverse selection of homes to fit your lifestyle.</p>
+                    </div>
+                    <div class="p-3">
+                        <i class="bi bi-bar-chart-line display-5 mb-3"></i>
+                        <h4>Data-Driven Insights</h4>
+                        <p>Access real-time analytics on neighborhoods, schools, and crime rates.</p>
+                    </div>
+                    <div class="p-3">
+                        <i class="bi bi-people display-5 mb-3"></i>
+                        <h4>Trusted by Thousands</h4>
+                        <p>Join countless satisfied homeowners who've found their dream homes with us.</p>
+                    </div>
+                </div>
+            </div>
         </section>
 
         
-        <section style="margin-bottom: 10px;">
-            <h2>Chatbot</h2>
-            <p>Ask us anything!</p>
-            <div id="chatbox" class="chatbox"></div>
-            <!-- Messages will appear here -->
+        <!-- <section class="hero-section" data-aos="fade-up"></section>
+            <div class="container">
+                <h1>Welcome to Perfect Home Finder</h1>
+                <p>Your journey to find the perfect home starts here.</p> -->
+                <!-- <a href="/home" class="btn btn-primary">Find a Home</a> -->
+            <!-- </div>
+        </section> -->
+        <!-- <section class="search-section" data-aos="fade-up">
+            <div class="container">
+                <h2>Search for Homes</h2>
+                <input type="text" id="search-bar" class="form-control" placeholder="Search for homes...">
+                <button id="search-button" class="btn btn-primary mt-2">Search</button>
+                <div id="search-results" class="mt-4"></div>
             </div>
-            <form id="chatForm">
-                <div class="form-group">
-                    <label for="message">Message:</label>
-                    <input type="text" id="message" name="message" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Send</button>
-            </form>
-
-        </section>
-        <section style="margin-bottom: 10px;">
-            <div>
-                <h2>Asking example questions:</h2>
+        </section> -->
+        <!-- <section class="hero-section" data-aos="fade-up">
+            <div class="container">
+                <h2>Search for Your Dream Home</h2>
+                <form action="/search" method="GET" class="search-form">
+                    <div class="form-group">
+                        <label for="search">What are you looking for in a house?</label>
+                        <input type="text" id="search" name="search" class="form-control" placeholder="e.g., 3 bedrooms, good schools, low crime rate">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+                <!-- <a href="/home" class="btn btn-primary mt-3">Find a Home</a> -->
+        
+        <!-- </section>  -->
+        <!-- <section class="features-section" data-aos="fade-up">
+            <div class="container">
+                <h2>Why Choose Us?</h2>
                 <ul>
-
-                    <li><strong>Predictions:</strong> Forecast prices in Denver for the next 120 months using SARIMA with p=2, d=1, q=1 and seasonal(12) and run 500 Monte Carlo simulations.</li>
-                    <li><strong>Trends: </strong> Show me some price trends around Denver</li>
-                    <li><strong>Schools: </strong> What are some schools near Denver?</li>
-                    <li><strong>Maths:</strong>  plot x**2</li>
-
+                    <li>Wide range of properties</li>
+                    <li>Expert advice</li>
+                    <li>Trusted by thousands</li>
                 </ul>
             </div>
-        </section>
+        </section> -->
+        <!-- <section>
+            <h1>Ask a Question</h1>
+            <form id="chatForm">
+                <input type="text" id="message" name="message" placeholder="Type your question here" required>
+                <button type="submit" class="btn btn-primary">Ask</button>
+            </form>
+            <div id="chat-box">
+                <h2>Chat Box</h2>
+                <div id="chatbox" class="chatbox"></div>
+            </div>
+        </section> -->
+        <section>
+            <div class="container text-center">
+                <h2 class="mb-4">Ask Questions About Your Search</h2>
+                <div class="d-flex justify-content-center align-items-center">
+                    <button id="open-chatbox" class="btn btn-primary me-3">Open Chatbox</button>
+                    <a href="/chat" class="btn btn-secondary"><i class="bi bi-chat-dots"></i> Open Full Chat</a>
+                </div>
+            </div>
+        </section>  
+
+        <div id="chatbox-container" class="chatbox-container border rounded shadow-sm mt-4">
+            <div id="chatbox-header" class="d-flex justify-content-between align-items-center p-3 bg-primary text-white">
+                <h5 class="mb-0" color="#10094">Chat Box</h5>
+                <button id="close-chatbox" class="btn btn-sm btn-light">Close</button>
+            </div>
+            <div id="chatbox-content" class="p-3 border bg-white rounded-bottom" style="overflow-y: auto;">
+                <form id="chatForm" class="input-group mb-3">
+                    <input type="text" id="message" name="message" class="form-control" placeholder="Type your question here" required>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+                <div id="chatbox-messages" class="chatbox-messages p-2 bg-light rounded" style="overflow-y: auto;"></div>
+            </div>
+        </div>
+        
+
+        <script src="../static/js/question.js"></script>
     </main>
-    <script src="../static/js/chat.js"></script>
-
-    {% include 'footer.html' %}
-
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Perfect Home Finder. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="../static/vendors/node_modules/aos/dist/aos.js" defer></script>
+    <script src="../static/vendors/node_modules/glightbox/dist/js/glightbox.min.js" defer></script>
+    <!-- <script src="../static/vendors/node_modules/swiper/swiper-bundle.min.js" defer></script> -->
+    <script src="../static/js/main.js"></script>
+    <script src="../static/js/search.js"></script>
 </body>
 </html>

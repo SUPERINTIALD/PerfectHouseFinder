@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block main %}
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.0.9/css/glightbox.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/main.css">
+
 <form action="/login" method="POST">
     <label for="username">Username</label>
     <input type="text" name="username" placeholder="Username">

@@ -39,9 +39,17 @@ app = Flask(__name__)
 def index():
 	return render_template('index.html')
 
+@app.route('/login')
+def login():
+    return render_template('login/login.html')
+
+
+@app.route('/create_account')
+def create_account():
+    return render_template('login/createAccount.html')
 @app.route('/home')
 def home():
-	return render_template('home.html')
+	return render_template('index.html')
 
 @app.route('/about')
 def about():
@@ -57,7 +65,7 @@ def contact():
 
 @app.route('/chat')
 def chatRoom():
-    return render_template('index.html')
+    return render_template('chat.html')
 @app.route('/api/data', methods=['GET'])
 def api_data():
     # Example static JSON response
