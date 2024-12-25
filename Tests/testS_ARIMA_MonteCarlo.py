@@ -153,7 +153,7 @@ if __name__ == "__main__":
     housing_data = load_and_merge_data(bottom_path, top_path)
 
     # Filter Boulder data
-    region_data = housing_data.loc[housing_data['RegionName'] == 'Seattle']
+    region_data = housing_data.loc[housing_data['RegionName'] == 'San Francisco']
     date_columns = [col for col in region_data.columns if re.match(r'\d{4}-\d{2}-\d{2}', col)]
 
     data = region_data[date_columns].iloc[0]
