@@ -1,4 +1,29 @@
 <footer>
-    <p>&copy; 2023 Home Finder. All rights reserved.</p>
+    <section>
+        <div class="container text-center">
+            <h2 class="mb-4">Ask Questions About Your Search</h2>
+            <div class="d-flex justify-content-center align-items-center">
+                <button id="open-chatbox" class="btn btn-primary me-3">Open Chatbox</button>
+            </div>
+        </div>
+    </section>  
+
+    <div id="chatbox-container" class="chatbox-container border rounded shadow-sm mt-4">
+        <div id="chatbox-header" class="d-flex justify-content-between align-items-center p-3">
+            <h5 class="mb-0" color="#10094">Chat Box</h5>
+            <button id="close-chatbox" class="btn btn-sm btn-light">Close</button>
+        </div>
+        <div id="chatbox-content" class="p-3 border bg-white rounded-bottom" style="overflow-y: auto;">
+            <form id="chatForm" class="input-group mb-3">
+                <input type="text" id="message" name="message" class="form-control" placeholder="Type your question here" required>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+            <div id="chatbox-messages" class="chatbox-messages p-2 bg-light rounded" style="overflow-y: auto;"></div>
+        </div>
+    </div>
+    
+
+    <script src="../static/js/question.js"></script>
+    <p>&copy; 2024 Home Finder. All rights reserved.</p>
 
 </footer>

@@ -105,10 +105,11 @@ ul li:nth-child(odd) {
 
 footer {
     text-align: center;
-    padding: 20px;
+    padding: 35px;
     background: #333;
     color: #fff;
-    margin-top: 20px;
+    margin-top: 25px;
+    border-radius: 10px;
 }
 
 footer p {
@@ -201,9 +202,8 @@ footer p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: #b0d6ff;
-    color: white;
+    /* padding: 10px; */
+    background-color: #97c9ff;
     border-bottom: 1px solid #ccc;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -706,17 +706,6 @@ bottom: 15px;
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
   
   .hero .social-links {
     margin-top: 20px;
@@ -734,4 +723,63 @@ bottom: 15px;
   
   .hero .social-links a:hover {
     color: var(--accent-color);
+  }
+
+
+
+
+
+
+  /* ABOUT ME SECTION */
+
+  .linkedin-btn {
+      color: #0a66c2;
+      border: 1px solid #0a66c2;
+      border-radius: 5px;
+      padding: 5px 10px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+  }
+  .linkedin-btn:hover {
+      background-color: #0a66c2;
+      color: white;
+  }
+  .github-btn {
+      color: #333;
+      border: 1px solid #333;
+      border-radius: 5px;
+      padding: 5px 10px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+  }
+  .github-btn:hover {
+      background-color: #333;
+      color: white;
+  }
+  .icon-spacing {
+      margin-right: 5px;
+  }
+
+
+  /* Image profile*/
+  #self-image {
+    max-width: 400px; /* Ensures the image doesn’t exceed its container */
+    height: 400px; /* Sets the height of the image */
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    object-position: center;
+    display: block; /* Allows margin auto to work */
+    margin: 0 auto 15px auto; /* Centers horizontally with margin at the bottom */
+  }
+  .textAbout{
+    color:#97c9ff;
+    object-position: center;
+    display: block; /* Allows margin auto to work */
+    margin: 0 auto 15px auto; /* Centers horizontally with margin at the bottom */
+    background-color: (var(--background-color));
+    border-radius: 40px;
+    text-align: center;
   }
