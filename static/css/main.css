@@ -103,17 +103,27 @@ ul li:nth-child(odd) {
     background: #e4e4e4;
 } */
 
-footer {
-    text-align: center;
-    padding: 35px;
+/* footer { */
+    /* text-align: center; */
+    /* padding: 35px;
     background: #333;
     color: #fff;
     margin-top: 25px;
     border-radius: 10px;
-}
+} */
 
 footer p {
     margin: 0;
+}
+footer {
+  padding: 35px;
+  background: #333;
+  margin-top: 25px;
+  border-radius: 10px;
+}
+
+.footer footer-content{
+  color: #fff; /* Apply white color only to footer text outside the chatbox */
 }
 
 
@@ -164,7 +174,7 @@ footer p {
 
 /* Homehtml, chatbox for questions: Closing and sliding feature */
 .chatbox-container {
-    /* display: none; */
+    display: none;
     position: fixed;
     bottom: 20px;
     right: 0px;
@@ -178,25 +188,39 @@ footer p {
     /* transition: right 0.3s ease; */
     z-index: 10000; 
     opacity: 0;
+    /* display: block; */
     transform: translateY(20px);
     transition: opacity 0.5s ease, transform 0.3s ease;
     resize: both; /* Allow resizing both horizontally and vertically */
     overflow: auto; /* Ensure content is scrollable if it overflows */
-    min-width: 300px; /* Minimum width */
-    min-height: 200px; /* Minimum height */
-    max-width: 100vw; /* Maximum width */
-    max-height: 100vh; /* Maximum height */
+    max-width: 200vw; /* Maximum width */
+    max-height: 100%; /* Maximum height */
+    color: #000;
 
 }
 
 .chatbox-container.open {
-    /* display: block; */
+    display: block;
     opacity: 1;
     transform: translateY(0);
     visibility: visible;
 
     /* right: 0; Slide in */
 }
+
+/* .chatbox-container.open {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+} */
+/* 
+.chatbox-container.closed {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  visibility: hidden;
+} */
 
 #chatbox-header {
     display: flex;
@@ -206,14 +230,14 @@ footer p {
     background-color: #97c9ff;
     border-bottom: 1px solid #ccc;
     border: 1px solid #ccc;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     cursor: move;
 
 }
 
 #chatbox-content {
     padding: 10px;
-    height: calc(100% - 50px); /* Adjust height based on header */
+    height: calc(100% - 60px); /* Adjust height based on header */
     display: flex;
     flex-direction: column;
 }
@@ -545,13 +569,13 @@ footer p {
 
 section,
 .section {
-  color: var(--default-color);
+  /* color: var(--default-color); */
   background-color: var(--background-color);
-  padding: 20px 40px; /* Increased padding for better spacing */
+  padding: 20px 40px; 
   margin: 20px auto; /* Center the sections horizontally */
   /* max-width: 100%; Set a maximum width for the sections */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow for better visual separation */
-  border-radius: 8px; /* Optional: Add rounded corners */
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); Optional: Add a subtle shadow for better visual separation */
+  border-radius: 8px;
   /* text-align: center; Optional: Center the text within the sections */
   overflow: hidden; /* Ensure content doesn't overflow */
 }
@@ -773,6 +797,7 @@ bottom: 15px;
     object-position: center;
     display: block; /* Allows margin auto to work */
     margin: 0 auto 15px auto; /* Centers horizontally with margin at the bottom */
+    margin-top: 25px;
   }
   .textAbout{
     color:#97c9ff;

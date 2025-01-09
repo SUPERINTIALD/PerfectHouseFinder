@@ -336,17 +336,8 @@ https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
 
 # For Yuri:
 ## Create article page:
-
 ### Add news, findings, today's market price, etc
 ## Create integrated API, with google maps based on search/address obtained from Zillow/school datasets, and find correlation fo the addresses based on user query
-
 ## Create database to find the related querys, and stuff so we can improve on this in the future
-
-
-## Fix Nav
-### Design a better one or fix it ig
-
-
-## Add more photos/make it more appealing for Home.html
-
-## Resize photos in READ.ME
+### Create a database to store user queries, and store the searched queries :)
+## Display Chatbox in Index isn't correct

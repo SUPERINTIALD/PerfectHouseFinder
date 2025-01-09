@@ -8,10 +8,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     openChatboxButton.addEventListener('click', function() {
         chatboxContainer.classList.toggle('open');
+        chatboxContainer.style.display = 'block'; // Makes it visible
+
     });
 
     closeChatboxButton.addEventListener('click', function() {
         chatboxContainer.classList.remove('open');
+        chatboxContainer.style.display = 'none'; // Makes it invisible
     });
 
     chatForm.addEventListener('submit', function(event) {
