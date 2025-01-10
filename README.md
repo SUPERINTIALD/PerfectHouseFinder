@@ -14,6 +14,7 @@ The Perfect Home Finder is a data-driven web application designed to help prospe
 7. [Contributing](#contributing)
 8. [Resources](#resources)
 9. [Credits](#credits)
+10. [Future Plans](#plans)
 
 ---
 
@@ -331,8 +332,35 @@ https://www.zillow.com/research/data/
 https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
 
 
+## Plans
 
+## Future Plans
 
+### 1. Enhanced User Experience
+- Improve the chat interface by adding overlays like **"NLP is Thinking"** to provide real-time feedback during processing.
+- Ensure the chatbox displays correctly on the homepage and across other pages.
+
+### 2. Data-Driven Insights
+- Create a centralized **database** to store user queries and search patterns for analysis and improvement of recommendations.
+- Develop **correlation tools** to analyze the relationship between user-provided addresses and factors such as schools, housing prices, and crime rates.
+
+### 3. Dynamic API Integration
+- Build an integrated **Google Maps API** feature to provide location insights and geospatial context for houses in the search.
+- Automate **data collection and integration** from sources like Zillow and other property listing platforms.
+
+### 4. Market Insights Page
+- Add an **Article Page** with news, findings, and insights on current housing trends and today's market prices.
+
+### 5. Advanced Forecasting
+- Enhance **SARIMA** and **ARIMA** implementations to provide better forecasts and display terminal outputs directly on the application interface.
+- Visualize **forecast trends** interactively for users.
+
+### 6. Deployment
+- Deploy the application on a reliable hosting platform such as **Heroku**, **Render**, or **GoDaddy** for public access.
+
+### 7. Community and Feedback
+- Introduce features for **user feedback** and contributions to continually improve the platform.
+- Encourage collaboration for adding new datasets and improving NLP responses.
 
 # For Yuri:
 ## Create article page:
