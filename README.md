@@ -341,3 +341,7 @@ https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
 ## Create database to find the related querys, and stuff so we can improve on this in the future
 ### Create a database to store user queries, and store the searched queries :)
 ## Display Chatbox in Index isn't correct
+
+## Make the output/terminal for SARIMA 
+# For Chat Make sure to make it overlay when "NLP IS THINKING"
+### HOST ON HEROKU/RENDER/GODADDY/ETC
