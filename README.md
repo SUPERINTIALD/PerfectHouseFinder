@@ -331,10 +331,7 @@ https://www.zillow.com/research/data/
 
 https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
 
-
 ## Plans
-
-## Future Plans
 
 ### 1. Enhanced User Experience
 - Improve the chat interface by adding overlays like **"NLP is Thinking"** to provide real-time feedback during processing.
@@ -361,6 +358,8 @@ https://help.openai.com/en/articles/5112595-best-practices-for-api-key-safety
 ### 7. Community and Feedback
 - Introduce features for **user feedback** and contributions to continually improve the platform.
 - Encourage collaboration for adding new datasets and improving NLP responses.
+
+### 8. Interactive Graph
 
 # For Yuri:
 ## Create article page:

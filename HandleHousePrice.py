@@ -1,3 +1,109 @@
+
+import pandas as pd
+import re
+import matplotlib.pyplot as plt
+import io
+import base64
+
+# Load and merge ZHVI datasets
+def load_and_merge_housing_data(bottom_path, top_path):
+    # Load datasets
+    bottom_data = pd.read_csv(bottom_path)
+    top_data = pd.read_csv(top_path)
+
+    # Merge datasets on specified columns
+    merge_columns = ['RegionID', 'RegionName', 'StateName', 'Metro', 'CountyName', 'RegionType']
+    merged_data = pd.merge(
+        bottom_data,
+        top_data,
+        on=merge_columns,
+        suffixes=('_bottom', '_top'),
+        how='outer'
+    )
+
+    # Combine date columns by averaging
+    date_columns_bottom = [col for col in merged_data.columns if '_bottom' in col]
+    date_columns_top = [col.replace('_bottom', '_top') for col in date_columns_bottom]
+
+    for b_col, t_col in zip(date_columns_bottom, date_columns_top):
+        merged_data[b_col] = pd.to_numeric(merged_data[b_col], errors='coerce')
+        merged_data[t_col] = pd.to_numeric(merged_data[t_col], errors='coerce')
+        merged_data[b_col] = merged_data[[b_col, t_col]].mean(axis=1)
+        merged_data.rename(columns={b_col: b_col.replace('_bottom', '')}, inplace=True)
+
+    # Drop 'top' columns
+    merged_data.drop(columns=date_columns_top, inplace=True)
+
+    return merged_data
+
+# Generate price trend chart
+def generate_price_trend_chart(merged_data, region):
+    # Filter data for the selected region
+    region_data = merged_data[merged_data['RegionName'].str.contains(region, case=False, na=False)]
+    if region_data.empty:
+        return None
+
+    # Extract and process monthly prices
+    date_columns = [col for col in merged_data.columns if re.match(r'\d{4}-\d{2}-\d{2}', col)]
+    avg_prices = region_data[date_columns].mean()
+
+    # Convert columns into datetime index
+    dates = pd.to_datetime(date_columns)
+
+    # Interpolate only if missing values exist
+    if avg_prices.isnull().any():
+        avg_prices = avg_prices.interpolate(method='linear').ffill().bfill()
+
+    # Create the plot
+    plt.figure(figsize=(12, 6))
+    plt.plot(dates, avg_prices.values, marker='o', markersize=3, linestyle='-', linewidth=1, color='blue', label='Historical Prices')
+
+    # Add labels and grid
+    plt.title(f'Price Trends in {region}')
+    plt.xlabel('Date')
+    plt.ylabel('Average Price ($)')
+    plt.grid(visible=True, linestyle='--', alpha=0.6)
+    plt.xticks(rotation=45)
+
+    # Add legend
+    plt.legend()
+
+    # Save plot as base64 string
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png', bbox_inches='tight')  # Prevent cutoff
+    buffer.seek(0)
+    encoded_image = base64.b64encode(buffer.getvalue()).decode('utf-8')
+    buffer.close()
+    plt.close()
+
+    return encoded_image
+
+# Process price query
+def process_price_query(query, merged_data):
+    # Use regex to extract numeric values and keywords
+    price = None
+    region = None
+
+    # Match region
+    region_match = re.search(r'around ([A-Za-z\s]+)', query)
+    if region_match:
+        region = region_match.group(1).strip()
+
+    # Handle trend query
+    if region:
+        chart = generate_price_trend_chart(merged_data, region)
+        if chart:
+            response = f"Here is the price trend in {region}.\n"
+            response += f'<img src="data:image/png;base64,{chart}"/>'
+        else:
+            response = f"No data found for {region}."
+
+    else:
+        response = "Sorry, I couldn't process your query. Please specify a valid location."
+
+    return response
+
+
 # import pandas as pd
 # from transformers import pipeline, AutoTokenizer, AutoModelForQuestionAnswering
 # import re
@@ -147,107 +253,3 @@
 
 #     return response
 
-
-import pandas as pd
-import re
-import matplotlib.pyplot as plt
-import io
-import base64
-
-# Load and merge ZHVI datasets
-def load_and_merge_housing_data(bottom_path, top_path):
-    # Load datasets
-    bottom_data = pd.read_csv(bottom_path)
-    top_data = pd.read_csv(top_path)
-
-    # Merge datasets on specified columns
-    merge_columns = ['RegionID', 'RegionName', 'StateName', 'Metro', 'CountyName', 'RegionType']
-    merged_data = pd.merge(
-        bottom_data,
-        top_data,
-        on=merge_columns,
-        suffixes=('_bottom', '_top'),
-        how='outer'
-    )
-
-    # Combine date columns by averaging
-    date_columns_bottom = [col for col in merged_data.columns if '_bottom' in col]
-    date_columns_top = [col.replace('_bottom', '_top') for col in date_columns_bottom]
-
-    for b_col, t_col in zip(date_columns_bottom, date_columns_top):
-        merged_data[b_col] = pd.to_numeric(merged_data[b_col], errors='coerce')
-        merged_data[t_col] = pd.to_numeric(merged_data[t_col], errors='coerce')
-        merged_data[b_col] = merged_data[[b_col, t_col]].mean(axis=1)
-        merged_data.rename(columns={b_col: b_col.replace('_bottom', '')}, inplace=True)
-
-    # Drop 'top' columns
-    merged_data.drop(columns=date_columns_top, inplace=True)
-
-    return merged_data
-
-# Generate price trend chart
-def generate_price_trend_chart(merged_data, region):
-    # Filter data for the selected region
-    region_data = merged_data[merged_data['RegionName'].str.contains(region, case=False, na=False)]
-    if region_data.empty:
-        return None
-
-    # Extract and process monthly prices
-    date_columns = [col for col in merged_data.columns if re.match(r'\d{4}-\d{2}-\d{2}', col)]
-    avg_prices = region_data[date_columns].mean()
-
-    # Convert columns into datetime index
-    dates = pd.to_datetime(date_columns)
-
-    # Interpolate only if missing values exist
-    if avg_prices.isnull().any():
-        avg_prices = avg_prices.interpolate(method='linear').ffill().bfill()
-
-    # Create the plot
-    plt.figure(figsize=(12, 6))
-    plt.plot(dates, avg_prices.values, marker='o', markersize=3, linestyle='-', linewidth=1, color='blue', label='Historical Prices')
-
-    # Add labels and grid
-    plt.title(f'Price Trends in {region}')
-    plt.xlabel('Date')
-    plt.ylabel('Average Price ($)')
-    plt.grid(visible=True, linestyle='--', alpha=0.6)
-    plt.xticks(rotation=45)
-
-    # Add legend
-    plt.legend()
-
-    # Save plot as base64 string
-    buffer = io.BytesIO()
-    plt.savefig(buffer, format='png', bbox_inches='tight')  # Prevent cutoff
-    buffer.seek(0)
-    encoded_image = base64.b64encode(buffer.getvalue()).decode('utf-8')
-    buffer.close()
-    plt.close()
-
-    return encoded_image
-
-# Process price query
-def process_price_query(query, merged_data):
-    # Use regex to extract numeric values and keywords
-    price = None
-    region = None
-
-    # Match region
-    region_match = re.search(r'around ([A-Za-z\s]+)', query)
-    if region_match:
-        region = region_match.group(1).strip()
-
-    # Handle trend query
-    if region:
-        chart = generate_price_trend_chart(merged_data, region)
-        if chart:
-            response = f"Here is the price trend in {region}.\n"
-            response += f'<img src="data:image/png;base64,{chart}"/>'
-        else:
-            response = f"No data found for {region}."
-
-    else:
-        response = "Sorry, I couldn't process your query. Please specify a valid location."
-
-    return response

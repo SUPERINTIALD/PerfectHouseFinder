@@ -77,8 +77,9 @@ def api_data():
     return jsonify(data), 200
 
 # Load the NLP model
-    # tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased-distilled-squad')
-    # model = AutoModelForQuestionAnswering.from_pretrained('distilbert-base-uncased-distilled-squad')
+#This is another NLP that doesnt work anymore
+# tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased-distilled-squad')
+# model = AutoModelForQuestionAnswering.from_pretrained('distilbert-base-uncased-distilled-squad')
 tokenizer = AutoTokenizer.from_pretrained('deepset/roberta-base-squad2')
 model = AutoModelForQuestionAnswering.from_pretrained('deepset/roberta-base-squad2')
 
@@ -567,4 +568,6 @@ def chat():
 #     print(f"Question: {q}")
 #     print(f"Answer: {answer}\n")
 if __name__ == '__main__':
-	app.run(host='localhost', port=5000, debug=True)
+	# app.run(host='localhost', port=5000, debug=True)
+    port  = int(os.environ.get('PORT', 10000))
+    app.run(host='0.0.0.0', port=port)
