@@ -76,6 +76,7 @@ def api_data():
     }
     return jsonify(data), 200
 
+
 # Load the NLP model
 #This is another NLP that doesnt work anymore
 # tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased-distilled-squad')
@@ -89,15 +90,17 @@ tokenizer.clean_up_tokenization_spaces = True
 # Load the NLP pipeline with the configured tokenizer and model
 nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
 nlp_gpt2 = pipeline("text-generation", model="gpt2")
+ner_pipeline = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-english")
+
 #Get school data
-public_schools = pd.read_csv('./datasets/schools/Public_Schools/Public_Schools.csv')
-private_schools = pd.read_csv('./datasets/schools/Private_Schools/Private_Schools.csv')
-public_schools['Type'] = 'Public'
-private_schools['Type'] = 'Private'
+# public_schools = pd.read_csv('./datasets/schools/Public_Schools/Public_Schools.csv')
+# private_schools = pd.read_csv('./datasets/schools/Private_Schools/Private_Schools.csv')
+# public_schools['Type'] = 'Public'
+# private_schools['Type'] = 'Private'
 # print("Public Schools Columns:", public_schools.columns)
 # print("Private Schools Columns:", private_schools.columns)
 
-combined_schools = pd.concat([public_schools, private_schools], ignore_index=True)
+# combined_schools = pd.concat([public_schools, private_schools], ignore_index=True)
 
 
 # school_data = load_dataset('mw4/schools')
@@ -133,7 +136,6 @@ plt.switch_backend('Agg')
 #     return info
 
 # Add Named Entity Recognition (NER) to Extract Location and Topic
-ner_pipeline = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-english")
 
 def extract_location_and_topic(question):
     entities = ner_pipeline(question)
@@ -148,27 +150,34 @@ def extract_location_and_topic(question):
     return location, topic
 
 
-def extract_school_info(dataset):
-    info = {}
-    for item in dataset:
-        if 'name' in item:
-            parts = item['name'].split(',')
-            if len(parts) > 1:
-                location = parts[-1].strip().capitalize()
-                school_name = parts[0].strip()
-                if location in info:
-                    info[location].append(school_name)
-                else:
-                    info[location] = [school_name]
+# def extract_school_info(dataset):
+#     info = {}
+#     for item in dataset:
+#         if 'name' in item:
+#             parts = item['name'].split(',')
+#             if len(parts) > 1:
+#                 location = parts[-1].strip().capitalize()
+#                 school_name = parts[0].strip()
+#                 if location in info:
+#                     info[location].append(school_name)
+#                 else:
+#                     info[location] = [school_name]
 
-                # info[location] = school_name #Only gets 1 school name
-    return info
+#                 # info[location] = school_name #Only gets 1 school name
+#     return info
 
 # Extract  information
 # crime_info = extract_crime_info(crime_data)
 # school_info = extract_school_info(school_data['train'])
-school_info = extract_combined_school_info(combined_schools)
+# school_info = extract_combined_school_info(combined_schools)
 
+
+
+
+
+# Add preloading: Load the school and crime data once
+
+# school_info = extract_combined_school_info()
 
 def get_relevant_context(question):
     location_match = re.search(r'in (\w+)', question.lower())
@@ -176,6 +185,9 @@ def get_relevant_context(question):
         location = location_match.group(1).strip().capitalize()
         # crime_context = f"Crime rate in {location}: {crime_info.get(location, 'No data available')}"
         # school_context = f"School rating in {location}: {school_info.get(location, 'No data available')}"
+
+        school_info = extract_combined_school_info()
+
         if location in school_info:
             schools = format_list_response(school_info[location], header=f"Schools in {location}:")
         else:
@@ -460,6 +472,8 @@ def chat():
 
             # Handle school-related queries
             elif topic == "schools" and location:
+                school_info = extract_combined_school_info() #Dynamically load school data
+
                 if location in school_info:
                     answer = format_list_response(school_info[location], header=f"Schools in {location}:")
                 else:
