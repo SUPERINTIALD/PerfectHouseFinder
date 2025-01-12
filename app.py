@@ -1,17 +1,23 @@
-from typing import Optional
+# from typing import Optional
 from flask import Flask, abort, redirect, request, render_template, session, jsonify
 from transformers import pipeline, AutoTokenizer, AutoModelForQuestionAnswering
-from datasets import load_dataset
+# from datasets import load_dataset
 import re
-import random
-import sympy as sp
+# import random
+# import sympy as sp
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
-import base64
-import io
-import numpy as np
+plt.switch_backend('Agg')
+
+# import base64
+# import io
+# import numpy as np
 import os
-import pandas as pd
+# import pandas as pd
 import threading
+
 # Handle the schools information
 from appFunc import (
     extract_combined_school_info,
@@ -47,6 +53,7 @@ def login():
 @app.route('/create_account')
 def create_account():
     return render_template('login/createAccount.html')
+
 @app.route('/home')
 def home():
 	return render_template('index.html')
@@ -66,21 +73,28 @@ def contact():
 @app.route('/chat')
 def chatRoom():
     return render_template('chat.html')
-@app.route('/api/data', methods=['GET'])
-def api_data():
-    # Example static JSON response
-    data = {
-        "status": "success",
-        "message": "This is the data you requested.",
-        "example_list": [1, 2, 3, 4, 5]
-    }
-    return jsonify(data), 200
 
 
-# Load the NLP model
+# @app.route('/api/data', methods=['GET'])
+# def api_data():
+#     # Example static JSON response
+#     data = {
+#         "status": "success",
+#         "message": "This is the data you requested.",
+#         "example_list": [1, 2, 3, 4, 5]
+#     }
+#     return jsonify(data), 200
+
+'''
+LOAD NLP MODEL
+'''
+
+
 #This is another NLP that doesnt work anymore
 # tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased-distilled-squad')
 # model = AutoModelForQuestionAnswering.from_pretrained('distilbert-base-uncased-distilled-squad')
+
+'''
 tokenizer = AutoTokenizer.from_pretrained('deepset/roberta-base-squad2')
 model = AutoModelForQuestionAnswering.from_pretrained('deepset/roberta-base-squad2')
 
@@ -91,6 +105,45 @@ tokenizer.clean_up_tokenization_spaces = True
 nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
 nlp_gpt2 = pipeline("text-generation", model="gpt2")
 ner_pipeline = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-english")
+'''
+
+model_lock = threading.Lock()
+
+# Lazy-loaded models (initialized as None)
+nlp = None
+# nlp_gpt2 = None
+ner_pipeline = None
+
+def load_qa_pipeline():
+    global nlp
+    with model_lock:
+        if nlp is None:  # Only load if not already initialized
+            tokenizer = AutoTokenizer.from_pretrained('deepset/roberta-base-squad2')
+            model = AutoModelForQuestionAnswering.from_pretrained('deepset/roberta-base-squad2')
+            nlp = pipeline('question-answering', model=model, tokenizer=tokenizer)
+            tokenizer.clean_up_tokenization_spaces = True
+
+    return nlp
+
+# def load_text_generation_pipeline():
+#     global nlp_gpt2
+#     with model_lock:
+#         if nlp_gpt2 is None:  # Only load if not already initialized
+#             nlp_gpt2 = pipeline("text-generation", model="distilgpt2")  # Switch to smaller GPT-2 model
+#     return nlp_gpt2
+
+def load_ner_pipeline():
+    global ner_pipeline
+    with model_lock:
+        if ner_pipeline is None:  # Only load if not already initialized
+            # ner_pipeline = pipeline("ner", model="dslim/bert-base-NER")  # Switch to smaller NER model
+            ner_pipeline = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-english")
+    return ner_pipeline
+
+
+
+
+
 
 #Get school data
 # public_schools = pd.read_csv('./datasets/schools/Public_Schools/Public_Schools.csv')
@@ -113,7 +166,6 @@ ner_pipeline = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-e
 #         break
 #     print(item)
 
-plt.switch_backend('Agg')
 
 
 
@@ -138,7 +190,9 @@ plt.switch_backend('Agg')
 # Add Named Entity Recognition (NER) to Extract Location and Topic
 
 def extract_location_and_topic(question):
-    entities = ner_pipeline(question)
+    # entities = ner_pipeline(question)
+    ner = load_ner_pipeline()  # Load dynamically
+    entities = ner(question)
     location = None
     topic = None
 
@@ -223,6 +277,8 @@ def format_list_response(items, header="Here are the results:"):
     return f"{header}\n" + "\n".join([f"- {item}" for item in items])
 
 def ask_nlp(question, context):
+    nlp = load_qa_pipeline()
+
     return nlp(question=question, context=context, clean_up_tokenization_spaces=True)
 
 

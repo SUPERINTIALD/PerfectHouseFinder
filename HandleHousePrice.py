@@ -1,7 +1,10 @@
 
 import pandas as pd
 import re
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 import io
 import base64
 

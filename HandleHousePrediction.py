@@ -1,13 +1,18 @@
 
 import numpy as np
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from statsmodels.tsa.arima.model import ARIMA
 import re
 import io
 import base64
+from functools import lru_cache
 
+@lru_cache(maxsize=1)
 def load_and_merge_data(bottom_path, top_path):
     # Load datasets
     bottom_data = pd.read_csv(bottom_path)
