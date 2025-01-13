@@ -88,6 +88,25 @@ conda activate HouseFinder
 uv pip install -r requirements.txt
 ```
 
+##### Important! Mac Users:
+Problems with incompatibility on Mac Environment:
+Mac:
+```bash
+# Downgrade Torch from 2.5.1
+torch==2.0.1 Only supported
+```
+```bash
+# pyarrow has some problem= 
+pip install --upgrade pyarrow
+# Version for pyarrow should be
+pyarrow == 18.1.0
+```
+
+```bash
+Numpy incompatible 2.2.1
+Downgrade to most compatible::
+numpy==1.26.4
+```
 #### **Using Virtual Environment (venv)**
 ```bash
 # Install uv for faster installation
