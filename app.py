@@ -6,7 +6,7 @@ import re
 # import random
 # import sympy as sp
 import os
-os.environ['MPLCONFIGDIR'] = "/static/cache/.matplotlib"
+os.environ['MPLCONFIGDIR'] = "/tmp/cache/.matplotlib"
 
 import matplotlib
 print(matplotlib.get_cachedir())
