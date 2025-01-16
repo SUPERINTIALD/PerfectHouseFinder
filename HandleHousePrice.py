@@ -1,5 +1,7 @@
 
 import pandas as pd
+# import fireducks.pandas as pd
+
 import re
 import matplotlib
 matplotlib.use('Agg')
@@ -7,13 +9,21 @@ import matplotlib.pyplot as plt
 
 import io
 import base64
+from functools import lru_cache
 
 # Load and merge ZHVI datasets
-def load_and_merge_housing_data(bottom_path, top_path):
-    # Load datasets
-    bottom_data = pd.read_csv(bottom_path)
-    top_data = pd.read_csv(top_path)
+@lru_cache(maxsize=1)
+# def load_and_merge_housing_data(bottom_path, top_path):
+def load_and_merge_housing_data():
 
+    # Load datasets4
+    bottom_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Bottom_tier_time_series.csv"
+    top_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Top_tier_time_series.csv"
+    bottom_data = pd.read_csv(bottom_tier_path)
+    top_data = pd.read_csv(top_tier_path)
+    # bottom_data = pd.read_csv(bottom_path)
+    # top_data = pd.read_csv(top_path)
+    
     # Merge datasets on specified columns
     merge_columns = ['RegionID', 'RegionName', 'StateName', 'Metro', 'CountyName', 'RegionType']
     merged_data = pd.merge(
