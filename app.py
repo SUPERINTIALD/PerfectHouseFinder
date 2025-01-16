@@ -1,17 +1,19 @@
 # from typing import Optional
+import os
+# Set MPLCONFIGDIR to a writable directory and ensure it exists
+mpl_cache_dir = "/tmp/cache/.matplotlib"
+os.makedirs(mpl_cache_dir, exist_ok=True)
+os.environ['MPLCONFIGDIR'] = mpl_cache_dir
+
 from flask import Flask, abort, redirect, request, render_template, session, jsonify
 from transformers import pipeline, AutoTokenizer, AutoModelForQuestionAnswering
 # from datasets import load_dataset
 import re
-# import random
-# import sympy as sp
-import os
-os.environ['MPLCONFIGDIR'] = "/tmp/cache/.matplotlib"
-# os.makedirs(mpl_cache_dir, exist_ok=True)  # Ensure the directory exists
-# os.environ['MPLCONFIGDIR'] = mpl_cache_dir
 
 import matplotlib
-print(matplotlib.get_cachedir())
+# print(matplotlib.get_cachedir())
+print(f"Matplotlib Cache Directory: {matplotlib.get_cachedir()}")
+
 matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
