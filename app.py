@@ -7,6 +7,8 @@ import re
 # import sympy as sp
 import os
 os.environ['MPLCONFIGDIR'] = "/tmp/cache/.matplotlib"
+os.makedirs(mpl_cache_dir, exist_ok=True)  # Ensure the directory exists
+os.environ['MPLCONFIGDIR'] = mpl_cache_dir
 
 import matplotlib
 print(matplotlib.get_cachedir())
