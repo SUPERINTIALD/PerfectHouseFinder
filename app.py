@@ -126,6 +126,12 @@ def load_qa_pipeline():
     return nlp
 
 # def load_text_generation_pipeline():
+def load_text_generation_pipeline():
+    global nlp_gpt2
+    with model_lock:
+        if nlp_gpt2 is None:  # Only load if not already initialized
+            nlp_gpt2 = pipeline("text-generation", model="deepseek-ai/DeepSeek-R1")
+    return nlp_gpt2
 #     global nlp_gpt2
 #     with model_lock:
 #         if nlp_gpt2 is None:  # Only load if not already initialized
@@ -537,10 +543,11 @@ def chat():
 
             # Default NLP processing for other questions
             else:
+                # try:
                 relevant_context = get_relevant_context(query)
                 result = ask_nlp(query, relevant_context)
                 answer = result['answer']
-
+         
             return jsonify({'results': [answer]})
             
         except Exception as e:
