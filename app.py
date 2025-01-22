@@ -1,11 +1,19 @@
 # from typing import Optional
+import os
+# Set MPLCONFIGDIR to a writable directory and ensure it exists
+mpl_cache_dir = "/tmp/cache/.matplotlib"
+os.makedirs(mpl_cache_dir, exist_ok=True)
+os.environ['MPLCONFIGDIR'] = mpl_cache_dir
+
 from flask import Flask, abort, redirect, request, render_template, session, jsonify
 from transformers import pipeline, AutoTokenizer, AutoModelForQuestionAnswering
 # from datasets import load_dataset
 import re
-# import random
-# import sympy as sp
+
 import matplotlib
+# print(matplotlib.get_cachedir())
+print(f"Matplotlib Cache Directory: {matplotlib.get_cachedir()}")
+
 matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
@@ -14,7 +22,6 @@ plt.switch_backend('Agg')
 # import base64
 # import io
 # import numpy as np
-import os
 # import pandas as pd
 import threading
 
@@ -512,14 +519,16 @@ def chat():
             # Check if the query is about house prices or predictions
             elif "$" in query or "price" in query.lower() or "forecast" in query.lower():
                 # Load house price data
-                bottom_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Bottom_tier_time_series.csv"
-                top_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Top_tier_time_series.csv"
+                # bottom_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Bottom_tier_time_series.csv"
+                # top_tier_path = "./datasets/ZHVI/City_ZHVI_All_Homes_Top_tier_time_series.csv"
 
                 # Merge data into a single dataset
-                merged_data = load_and_merge_data(bottom_tier_path, top_tier_path)
 
                 # Process forecasting queries
+                merged_data = load_and_merge_housing_data()
+
                 if "forecast" in query.lower():
+
                     try:
                         # Call process_forecast_query directly
                         answer, plot_image = process_forecast_query(query, merged_data, location)

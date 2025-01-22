@@ -11,6 +11,8 @@ import io
 import numpy as np
 import os
 import pandas as pd
+# import fireducks.pandas as pd
+
 #Get math questions:
 def handle_math_question(question):
     # Match basic arithmetic operations
