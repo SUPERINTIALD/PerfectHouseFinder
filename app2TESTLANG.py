@@ -2,8 +2,18 @@
 from flask import Flask, abort, redirect, request, render_template, session, jsonify
 from transformers import pipeline, AutoTokenizer, AutoModelForQuestionAnswering
 from langchain.agents import initialize_agent, Tool
-from langchain.chat_models import ChatOpenAI
+# from langchain.chat_models import ChatOpenAI
+# from langchain_community.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
+
+# from langchain.memory import ConversationBufferMemory
+# from langchain.schema.memory import ConversationBufferMemory
 from langchain.memory import ConversationBufferMemory
+
+# from langchain_ai import LangGraph, ReActAgent
+from langchain.agents import initialize_agent, Tool
+
+memory = ConversationBufferMemory(return_messages=True, memory_key="history")
 
 import traceback
 
@@ -269,7 +279,7 @@ general_nlp_tool = Tool(
 # Initialize LangChain Agent
 llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.7)
 tools = [math_tool, school_tool, forecast_tool, general_nlp_tool]
-memory = ConversationBufferMemory(k=3)  # Retain only the last 3 interactions
+# memory = ConversationBufferMemory(k=3)  # Retain only the last 3 interactions
 
 agent = initialize_agent(
     tools=tools,
@@ -280,6 +290,7 @@ agent = initialize_agent(
     memory=memory  # Add memory for truncation
 
 )
+# agent = ReActAgent.from_tools_and_llm(tools=tools, llm=llm)
 
 
 
@@ -293,7 +304,8 @@ def chat():
             query = data['query']
 
             # Use LangChain agent
-            response = agent.invoke({"input": query})
+            # response = agent.invoke({"input": query})
+            response = agent.run(query)
 
             # Serialize response to ensure JSON compatibility
             # if isinstance(response, dict):
