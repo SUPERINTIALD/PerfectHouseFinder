@@ -14,6 +14,8 @@ from langchain.memory import ConversationBufferMemory
 from langchain.agents import initialize_agent, Tool
 
 memory = ConversationBufferMemory(return_messages=True, memory_key="history")
+import sys
+print(sys.getdefaultencoding())
 
 import traceback
 
@@ -261,7 +263,7 @@ def forecast_tool(query):
 forecast_tool = Tool(
     name="Forecast Tool",
     func=forecast_tool,
-    description="Handles queries related to housing prices and forecasts."
+    description="Handles queries related to housing prices and forecasts. After it is done, go to general_nlp_tool to describe the plot"
 )
 
 # Tool: General NLP Queries
@@ -302,6 +304,7 @@ def chat():
         try:
             data = request.get_json()
             query = data['query']
+            print(f"Debug - Query: {repr(query)}")
 
             # Use LangChain agent
             # response = agent.invoke({"input": query})
